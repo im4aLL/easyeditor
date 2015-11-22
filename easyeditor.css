@@ -1,0 +1,78 @@
+.easyeditor {
+    outline: none;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.easyeditor-toolbar {
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    padding: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.easyeditor-toolbar ul:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.easyeditor-toolbar li {
+    list-style: none;
+}
+
+.easyeditor-toolbar li button {
+    background: #f4f4f4;
+    color: #777;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 8px;
+    float: left;
+    margin-right: 5px;
+    min-width: 30px;
+}
+
+.easyeditor-toolbar li button:hover {
+    border: 1px solid #057DC4;
+    background: #0e90dc;
+    color: #fff;
+}
+
+.toolbar-italic {
+    font-style: italic;
+}
+
+.easyeditor blockquote {
+    border-left: 2px solid #ddd;
+    padding-left: 20px;
+    color: #777;
+}
+
+.easyeditor figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    min-width: 100px;
+    max-width: 100%;
+    padding: 7px;
+    box-sizing: border-box;
+    margin: auto;
+    overflow: hidden;
+}
+
+.easyeditor figure.is-resizable {
+    resize: both;
+    border: 1px solid #0e90dc;
+    cursor: se-resize;
+}
+
+.easyeditor figure img {
+    width: 100%;
+}

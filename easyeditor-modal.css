@@ -1,0 +1,59 @@
+.easyeditor-modal {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.easyeditor-modal.is-hidden {
+    display: none;
+}
+
+.easyeditor-modal-content {
+    background: #fff;
+    padding: 30px;
+    width: 600px;
+    margin: auto;
+    position: relative;
+}
+
+.easyeditor-modal-content-header {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.easyeditor-modal-close {
+    position: absolute;
+    right: 20px;
+    top: 0;
+}
+
+.easyeditor-modal-content-body-loader {
+    height: 5px;
+    width: 0;
+    background: #0e90dc;
+    margin-bottom: 20px;
+    transition: width 400ms;
+}
+
+.easyeditor-modal-content-body input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.easyeditor-modal-content-body button {
+    margin-top: 20px;
+    padding: 7px 10px;
+    border: 1px solid #057DC4;
+    background: #0e90dc;
+    color: #fff;
+    cursor: pointer;
+}
+
+.easyeditor-modal-content-body button:hover {
+    opacity: 0.8;
+}

@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 50px 0 20px;
+}

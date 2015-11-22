@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="easyeditor.css">
+    <link rel="stylesheet" href="easyeditor-modal.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Easy editor</h1>
+
+    <div id="editor">
+        <b></b><b>Lorem ipsum</b> dolor sit amet, consectetur adipisicing elit. Eos, porro provident dolorum dolorem magni est quos alias qui! Autem eveniet, asperiores optio. Sequi aperiam, officia nesciunt perspiciatis praesentium ullam labore! <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A sapiente, ut incidunt officia non, repudiandae rem hic voluptatum nam qui sint velit accusamus iusto doloremque ipsa, dolorum ex eius, nihil recusandae in quasi vitae expedita veniam excepturi! <br><br>
+        <figure>
+            <img src="http://placehold.it/500x300" alt="">
+        </figure>
+        <br><br>
+        Magni natus, animi aliquid unde dolores quaerat totam quia laudantium voluptatem velit ducimus sapiente in nihil laboriosam hic consectetur repellendus odit. Voluptatem reprehenderit sapiente ad eveniet eum voluptas autem ipsam dolorum recusandae facere, similique debitis esse, ea excepturi nulla aliquam ut nesciunt! Vero fugiat obcaecati excepturi molestias, aut veniam aliquam enim sit eligendi ex laborum, repellendus aspernatur, libero dolore quod voluptatibus ea! Aspernatur!
+    </div>
+
+</div>
+
+<div class="easyeditor-modal is-hidden" id="easyeditor-modal-1">
+    <div class="easyeditor-modal-content">
+        <div class="easyeditor-modal-content-header">Upload image</div>
+        <div class="easyeditor-modal-content-body">
+            <div class="easyeditor-modal-content-body-loader"></div>
+            <button class="easyeditor-modal-close">x</button>
+
+            <form action="uploader_sdk/" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="easyeditor-file">
+                <button type="submit" name="easyeditor-upload">Upload and insert</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="vendor/jquery.min.js"></script>
+<script src="vendor/jquery.form.min.js"></script>
+<script src="easyeditor.js"></script>
+<script>
+
+    EasyEditor.prototype.image = function(){
+        var _this = this;
+        var settings = {
+            buttonIdentifier: 'insert-image',
+            buttonHtml: 'Insert image',
+            clickHandler: function(){
+                _this.openModal('#easyeditor-modal-1');
+            }
+        };
+
+        _this.injectButton(settings);
+    };
+
+
+    jQuery(document).ready(function($) {
+        var easyEditor = new EasyEditor({
+            element: '#editor'
+        });
+
+
+        // form uploader starts
+        $loader = $('.easyeditor-modal-content-body-loader');
+        $('.easyeditor-modal-content-body').find('form').ajaxForm({
+            beforeSend: function() {
+                $loader.css('width', '0%');
+            },
+            uploadProgress: function(event, position, total, percentComplete) {
+                $loader.css('width', percentComplete + '%');
+            },
+            success: function() {
+                $loader.css('width', '100%');
+            },
+            complete: function(get) {
+                if(get.responseText != 'null') {
+                    easyEditor.insertHtml('<figure><img src="uploader_sdk/images/'+ get.responseText +'" alt=""></figure>');
+                    easyEditor.closeModal('#easyeditor-modal-1');
+                }
+            }
+        });
+        // form uploader ends
+
+
+        var $cache = $('.easyeditor-toolbar');
+        var width = $cache.width();
+        var vTop = $cache.offset().top - parseFloat($cache.css('marginTop').replace(/auto/, 0));
+        $(window).scroll(function (event) {
+            var y = $(this).scrollTop();
+
+            if (y >= vTop) {
+                $cache.addClass('is-fixed').css('width', width + 'px');
+            } else {
+                $cache.removeClass('is-fixed').css('width', 'auto');
+            }
+        });
+
+    });
+</script>
+
+<style>
+    .easyeditor-toolbar.is-fixed {
+        position: fixed;
+        top: 0;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+
+</body>
+</html>
+
