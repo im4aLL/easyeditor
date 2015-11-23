@@ -5,10 +5,11 @@
     function EasyEditor(options){
         this.elem = options.element;
         this.className = options.className || 'easyeditor';
-        
+
         var allButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'image', 'youtube', 'x'];
         var defaultButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright'];
         this.buttons = options.buttons || defaultButtons;
+        this.buttonsHtml = options.buttonsHtml || null;
 
         this.attachEvents();
     }
@@ -66,8 +67,12 @@
     EasyEditor.prototype.injectButton = function(settings){
         var _this = this;
 
+        if(_this.buttonsHtml !== null && _this.buttonsHtml[settings.buttonIdentifier] !== undefined) {
+            settings.buttonHtml = _this.buttonsHtml[settings.buttonIdentifier];
+        }
+
         if(settings.buttonHtml) {
-            _this.$toolbarContainer.find('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'">'+ settings.buttonHtml +'</button></li>');
+            _this.$toolbarContainer.find('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ settings.buttonIdentifier.replace(/\W/g, ' ') +'">'+ settings.buttonHtml +'</button></li>');
         }
 
         if(typeof settings.clickHandler === 'function') {

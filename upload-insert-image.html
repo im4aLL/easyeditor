@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Easy editor - Upload and insert image into EasyEditor</title>
     <link rel="stylesheet" href="style.css">
-    
+
     <!-- easy editor stylesheet -->
     <link rel="stylesheet" href="src/easyeditor.css">
     <link rel="stylesheet" href="src/easyeditor-modal.css">
@@ -18,7 +18,7 @@
 
         <!-- easy editor wil apply in this div -->
         <div id="editor" placeholder="Type here ... ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, officiis, ipsam. Nostrum neque id quaerat, iste. Nostrum incidunt hic minus impedit voluptatibus explicabo, quo modi fugit doloribus odit provident labore. <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime, recusandae, esse eum aliquid natus, repellat ea, temporibus eaque voluptates tempora beatae. Alias laboriosam, vero necessitatibus? Fugiat modi, voluptatum at?</div>
-        
+
 
 
         <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
@@ -93,7 +93,7 @@
             }
         });
         // form uploader ends using jquery.form.min.js
-        
+
     });
 &lt;/script&gt;</pre>
 
@@ -101,10 +101,24 @@
         <pre class="code">I have added a sample uploader using PHP <a href="https://github.com/im4aLL/easyeditor/blob/master/uploader_sdk/index.php" target="_blank">located here</a> which does upload image and return filename. That's it!</pre>
 
         <footer>
-            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F! 
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
             <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
-            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :) 
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :)
         </footer>
+
+        <!-- comment starts -->
+        <script src="https://apis.google.com/js/plusone.js"></script>
+        <div id="comments"></div>
+        <script>
+            gapi.comments.render('comments', {
+                href: window.location,
+                width: '960',
+                first_party_property: 'BLOGGER',
+                view_type: 'FILTERED_POSTMOD'
+            });
+        </script>
+        <!-- comment starts -->
+
     </div>
 
 
@@ -125,7 +139,7 @@
         </div>
     </div>
     <!-- easy editor modal ends -->
-    
+
     <!-- dependancy js -->
     <script src="vendor/jquery.min.js"></script>
     <script src="vendor/jquery.form.min.js"></script>
@@ -173,7 +187,7 @@
                 }
             });
             // form uploader ends using jquery.form.min.js
-            
+
         });
     </script>
 

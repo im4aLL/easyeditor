@@ -50,3 +50,15 @@ footer a,
 .p a {
     color: #0e90dc
 }
+
+.code mark,
+.p mark {
+    background: inherit;
+    font-weight: bold;
+    color: #0e90dc
+}
+
+.p mark {
+    font-weight: normal;
+    font-style: italic;
+}

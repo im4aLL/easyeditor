@@ -9,14 +9,53 @@
 
     <div class="container container-fluid">
         <h1>Easy editor <span>documentation</span></h1>
-        
-        <p class="p"><a href="examples.html">Checkout all examples first</a></p>
+
+        <p class="p"><a href="examples.html">Checkout all examples</a>. Following documentation seems wired but you will get what you need.</p>
 
         <p class="p">Supported default buttons: </p>
         <pre class="code">['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'x']</pre>
 
+        <p class="p">How to use icon font in button text: e.g. If you are planning to use font awesome then include fontawesome css and do like this - </p>
+        <pre class="code">var easyEditor = new EasyEditor({
+    element: &#039;#editor&#039;,
+    buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;h3&#039;, &#039;h4&#039;, &#039;alignleft&#039;, &#039;aligncenter&#039;, &#039;alignright&#039;, &#039;quote&#039;, &#039;code&#039;, &#039;image&#039;, &#039;youtube&#039;, &#039;x&#039;],
+    <mark>buttonsHtml</mark>: {
+        &#039;bold&#039;: &#039;&lt;i class=&quot;fa fa-bold&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;italic&#039;: &#039;&lt;i class=&quot;fa fa-italic&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;link&#039;: &#039;&lt;i class=&quot;fa fa-link&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;header-2&#039;: &#039;&lt;i class=&quot;fa fa-header&quot;&gt;&lt;/i&gt;2&#039;,
+        &#039;header-3&#039;: &#039;&lt;i class=&quot;fa fa-header&quot;&gt;&lt;/i&gt;3&#039;,
+        &#039;header-4&#039;: &#039;&lt;i class=&quot;fa fa-header&quot;&gt;&lt;/i&gt;4&#039;,
+        &#039;align-left&#039;: &#039;&lt;i class=&quot;fa fa-align-left&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;align-center&#039;: &#039;&lt;i class=&quot;fa fa-align-center&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;align-right&#039;: &#039;&lt;i class=&quot;fa fa-align-right&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;quote&#039;: &#039;&lt;i class=&quot;fa fa-quote-left&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;code&#039;: &#039;&lt;i class=&quot;fa fa-code&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;insert-image&#039;: &#039;&lt;i class=&quot;fa fa-picture-o&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;insert-youtube-video&#039;: &#039;&lt;i class=&quot;fa fa-youtube&quot;&gt;&lt;/i&gt;&#039;,
+        &#039;remove-formatting&#039;: &#039;&lt;i class=&quot;fa fa-ban&quot;&gt;&lt;/i&gt;&#039;
+    }
+});
+
+// list of button identifier
+// =========================
+// bold
+// italic
+// link
+// header-2
+// header-3
+// header-4
+// align-left
+// align-center
+// align-right
+// quote
+// code
+// insert-image
+// insert-youtube-video
+// remove-formatting</pre>
+
         <p class="p">Insert custom button: </p>
-        <pre class="code">EasyEditor.prototype.custombutton = function(){
+        <pre class="code">EasyEditor.prototype.<mark>custombutton</mark> = function(){
     var _this = this;
     var settings = {
         buttonIdentifier: 'custombutton',
@@ -32,15 +71,164 @@
 jQuery(document).ready(function($) {
     new EasyEditor({
         element: '#editor',
-        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'custombutton']
+        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', '<mark>custombutton</mark>']
     });
 });</pre>
 
+        <p class="p">Wrap with HTML tag: </p>
+        <pre class="code">EasyEditor.prototype.<mark>wrapSelectionWithNodeName</mark>(arg)
+
+arg = {
+    name: 'Tag name e.g h2',
+    blockElement: 'boolean',
+    style: 'e.g color: #ff0000; background: pink',
+    class: 'class name',
+    attribute: '[arg1, arg2]',
+    keepHtml: 'boolean'
+};
+
+Usage:
+------
+EasyEditor.prototype.h5 = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'h5',
+        buttonHtml: 'h5',
+        clickHandler: function(){
+
+            _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'span' });
+            // or
+            _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'a', attribute: ['href', prompt('Insert link', '')] });
+            // or
+            _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'p', style: 'text-align: right', class: 'text-right', keepHtml: true });
+            // or
+            _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'h4', blockElement: true });
+
+        }
+    };
+
+    _this.injectButton(settings);
+};
+</pre>
+
+        <p class="p">Insert node at caret or cursor position: </p>
+        <pre class="code">EasyEditor.prototype.imageurl = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'insert-image-url',
+        buttonHtml: 'Insert image url',
+        clickHandler: function(){
+            var link = prompt('Insert direct image path', '');
+
+            if(link.length > 0) {
+                var figure = document.createElement('figure');
+                $(figure).html('&lt;img src=&quot;&#039;+ link +&#039;&quot; alt=&quot;&quot;&gt;');
+                _this.<mark>insertAtCaret</mark>(figure);
+            }
+            else {
+                alert('Invalid URL!');
+            }
+
+        }
+    };
+
+    _this.injectButton(settings);
+};</pre>
+
+        <p class="p">Modal template: This should be inserted when needed only and before body closing tag</p>
+        <pre class="code">&lt;div class=&quot;easyeditor-modal is-hidden&quot; id=&quot;<mark>your-selector-id-here</mark>&quot;&gt;
+    &lt;div class=&quot;easyeditor-modal-content&quot;&gt;
+        &lt;div class=&quot;easyeditor-modal-content-header&quot;&gt;<mark>{{ Modal title here }}</mark>&lt;/div&gt;
+        &lt;div class=&quot;easyeditor-modal-content-body&quot;&gt;
+            &lt;button class=&quot;easyeditor-modal-close&quot;&gt;x&lt;/button&gt;
+            <mark>{{ Modal body html here }}</mark>
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+        <p class="p">Working with modal window: </p>
+        <pre class="code">this.<mark>openModal</mark>('#your-selector-ID-not-class');
+
+Usage:
+------
+EasyEditor.prototype.image = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'insert-image',
+        buttonHtml: 'Insert image',
+        clickHandler: function(){
+            _this.<mark>openModal</mark>('#easyeditor-modal-1');
+        }
+    };
+
+    _this.injectButton(settings);
+};
+</pre>
+        <p class="p">When you open modal you must close it by closeModal('#selection-id-name') and when modal opened <mark>insertAtCaret</mark> will not work. In that case you <mark>insertHtml</mark>. <mark>insertHtml</mark> only works when modal has opened!</p>
+        <pre class="code">easyEditor.insertHtml(&#039;&lt;figure&gt;&lt;img src=&quot;http://placehold.it/500x300&quot; alt=&quot;&quot;&gt;&lt;/figure&gt;&#039;);
+easyEditor.closeModal(&#039;#easyeditor-modal-1&#039;);
+
+Usage:
+------
+EasyEditor.prototype.image = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: &#039;insert-image&#039;,
+        buttonHtml: &#039;Insert image&#039;,
+        clickHandler: function(){
+            _this.<mark>openModal</mark>(&#039;#easyeditor-modal-1&#039;);
+        }
+    };
+
+    _this.injectButton(settings);
+};
+
+jQuery(document).ready(function($) {
+    var <mark>easyEditor</mark> = new EasyEditor({
+        element: &#039;#editor&#039;,
+        buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;image&#039;]
+    });
+
+    $loader = $(&#039;.easyeditor-modal-content-body-loader&#039;);
+    $(&#039;.easyeditor-modal-content-body&#039;).find(&#039;form&#039;).ajaxForm({
+        beforeSend: function() {
+            $loader.css(&#039;width&#039;, &#039;0%&#039;);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            $loader.css(&#039;width&#039;, percentComplete + &#039;%&#039;);
+        },
+        success: function() {
+            $loader.css(&#039;width&#039;, &#039;100%&#039;);
+        },
+        complete: function(get) {
+            if(get.responseText != &#039;null&#039;) {
+                <mark>easyEditor</mark>.<mark>insertHtml</mark>(&#039;&lt;figure&gt;&lt;img src=&quot;uploader_sdk/images/&#039;+ get.responseText +&#039;&quot; alt=&quot;&quot;&gt;&lt;/figure&gt;&#039;);
+                <mark>easyEditor</mark>.<mark>closeModal</mark>(&#039;#easyeditor-modal-1&#039;);
+            }
+        }
+    });
+
+});</pre>
+
         <footer>
-            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F! 
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
             <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
-            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :) 
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :)
         </footer>
+
+        <!-- comment starts -->
+        <script src="https://apis.google.com/js/plusone.js"></script>
+        <div id="comments"></div>
+        <script>
+            gapi.comments.render('comments', {
+                href: window.location,
+                width: '960',
+                first_party_property: 'BLOGGER',
+                view_type: 'FILTERED_POSTMOD'
+            });
+        </script>
+        <!-- comment starts -->
+
     </div>
 
 </body>

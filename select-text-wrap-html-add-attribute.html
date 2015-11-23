@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Easy editor - Select a text and add html tag around it with a custom attribute</title>
     <link rel="stylesheet" href="style.css">
-    
+
     <!-- easy editor stylesheet -->
     <link rel="stylesheet" href="src/easyeditor.css">
 </head>
@@ -16,7 +16,7 @@
 
         <!-- easy editor wil apply in this div -->
         <div id="editor" placeholder="Type here ... ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, officiis, ipsam. Nostrum neque id quaerat, iste. Nostrum incidunt hic minus impedit voluptatibus explicabo, quo modi fugit doloribus odit provident labore. <br><br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime, recusandae, esse eum aliquid natus, repellat ea, temporibus eaque voluptates tempora beatae. Alias laboriosam, vero necessitatibus? Fugiat modi, voluptatum at?</div>
-        
+
 
 
         <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
@@ -54,12 +54,26 @@
 &lt;/script&gt;</pre>
 
         <footer>
-            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F! 
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
             <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
-            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :) 
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :)
         </footer>
+
+        <!-- comment starts -->
+        <script src="https://apis.google.com/js/plusone.js"></script>
+        <div id="comments"></div>
+        <script>
+            gapi.comments.render('comments', {
+                href: window.location,
+                width: '960',
+                first_party_property: 'BLOGGER',
+                view_type: 'FILTERED_POSTMOD'
+            });
+        </script>
+        <!-- comment starts -->
+
     </div>
-    
+
     <!-- dependancy js -->
     <script src="vendor/jquery.min.js"></script>
     <!-- easy editor core js -->
