@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Editor</title>
+    <title>Easy Editor</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="easyeditor.css">
-    <link rel="stylesheet" href="easyeditor-modal.css">
+    <link rel="stylesheet" href="src/easyeditor.css">
+    <link rel="stylesheet" href="src/easyeditor-modal.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>Easy editor</h1>
+    <h1>Easy editor <span>A rich text html / wysiwyg editor</span></h1>
 
     <div id="editor">
         <b></b><b>Lorem ipsum</b> dolor sit amet, consectetur adipisicing elit. Eos, porro provident dolorum dolorem magni est quos alias qui! Autem eveniet, asperiores optio. Sequi aperiam, officia nesciunt perspiciatis praesentium ullam labore! <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A sapiente, ut incidunt officia non, repudiandae rem hic voluptatum nam qui sint velit accusamus iusto doloremque ipsa, dolorum ex eius, nihil recusandae in quasi vitae expedita veniam excepturi! <br><br>
@@ -20,6 +20,17 @@
         <br><br>
         Magni natus, animi aliquid unde dolores quaerat totam quia laudantium voluptatem velit ducimus sapiente in nihil laboriosam hic consectetur repellendus odit. Voluptatem reprehenderit sapiente ad eveniet eum voluptas autem ipsam dolorum recusandae facere, similique debitis esse, ea excepturi nulla aliquam ut nesciunt! Vero fugiat obcaecati excepturi molestias, aut veniam aliquam enim sit eligendi ex laborum, repellendus aspernatur, libero dolore quod voluptatibus ea! Aspernatur!
     </div>
+
+    <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
+
+    <p class="p">Usage: </p>
+    <pre class="code">Go ahead view source or check out <a href="./examples.html">example lists</a></pre>
+
+    <footer>
+        EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F! 
+        <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
+        <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :) 
+    </footer>
 
 </div>
 
@@ -41,7 +52,7 @@
 
 <script src="vendor/jquery.min.js"></script>
 <script src="vendor/jquery.form.min.js"></script>
-<script src="easyeditor.js"></script>
+<script src="src/easyeditor.js"></script>
 <script>
 
     EasyEditor.prototype.image = function(){
@@ -57,10 +68,35 @@
         _this.injectButton(settings);
     };
 
+    EasyEditor.prototype.youtube = function(){
+        var _this = this;
+        var settings = {
+            buttonIdentifier: 'insert-youtube-video',
+            buttonHtml: 'Insert youtube video',
+            clickHandler: function(){
+                var youttibeVideoLink = prompt('Insert youtube video link', '');
+                var videoId = _this.getYoutubeVideoIdFromUrl(youttibeVideoLink);
+
+                if(videoId.length > 0) {
+                    var iframe = document.createElement('iframe');
+                    $(iframe).attr({ width: '560', height: '315', frameborder: 0, allowfullscreen: true, src: 'https://www.youtube.com/embed/' + videoId });
+                    _this.insertAtCaret(iframe);
+                }
+                else {
+                    alert('Invalid YouTube URL!');
+                }
+                
+            }
+        };
+
+        _this.injectButton(settings);
+    };
+
 
     jQuery(document).ready(function($) {
         var easyEditor = new EasyEditor({
-            element: '#editor'
+            element: '#editor',
+            buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'image', 'youtube', 'x']
         });
 
 
@@ -86,6 +122,7 @@
         // form uploader ends
 
 
+        // sticky toolbar
         var $cache = $('.easyeditor-toolbar');
         var width = $cache.width();
         var vTop = $cache.offset().top - parseFloat($cache.css('marginTop').replace(/auto/, 0));
@@ -101,15 +138,6 @@
 
     });
 </script>
-
-<style>
-    .easyeditor-toolbar.is-fixed {
-        position: fixed;
-        top: 0;
-        background: #fff;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
 
 </body>
 </html>

@@ -1,18 +1,19 @@
 .easyeditor {
     outline: none;
-    border: 1px solid #ddd;
+    border: 1px solid #e9e9e9;
     padding: 20px;
     margin-bottom: 20px;
 }
 
 .easyeditor-toolbar {
-    border: 1px solid #ddd;
+    border: 1px solid #e9e9e9;
     border-bottom: 0;
     padding: 20px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background: rgba(241, 241, 241, 0.2);
 }
 
 .easyeditor-toolbar ul:after {
@@ -28,7 +29,7 @@
 .easyeditor-toolbar li button {
     background: #f4f4f4;
     color: #777;
-    border: 1px solid #ddd;
+    border: 1px solid #e9e9e9;
     font-weight: bold;
     cursor: pointer;
     display: inline-block;
@@ -36,12 +37,18 @@
     float: left;
     margin-right: 5px;
     min-width: 30px;
+    outline: none;
+    border-radius: 2px;
 }
 
 .easyeditor-toolbar li button:hover {
-    border: 1px solid #057DC4;
-    background: #0e90dc;
-    color: #fff;
+    background: #f9f9f9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.easyeditor-toolbar li button:active {
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .toolbar-italic {
@@ -49,7 +56,7 @@
 }
 
 .easyeditor blockquote {
-    border-left: 2px solid #ddd;
+    border-left: 2px solid #e9e9e9;
     padding-left: 20px;
     color: #777;
 }
@@ -75,4 +82,18 @@
 
 .easyeditor figure img {
     width: 100%;
+}
+
+.easyeditor[contenteditable=true]:empty:before{
+    content: attr(placeholder);
+    display: block;
+    opacity: 0.5;
+    cursor: text;
+}
+
+.easyeditor-toolbar.is-fixed {
+    position: fixed;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
 }

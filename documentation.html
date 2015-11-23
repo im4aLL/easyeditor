@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Easy editor - documentation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container container-fluid">
+        <h1>Easy editor <span>documentation</span></h1>
+        
+        <p class="p"><a href="examples.html">Checkout all examples first</a></p>
+
+        <p class="p">Supported default buttons: </p>
+        <pre class="code">['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'x']</pre>
+
+        <p class="p">Insert custom button: </p>
+        <pre class="code">EasyEditor.prototype.custombutton = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'custombutton',
+        buttonHtml: 'My custom button',
+        clickHandler: function(){
+            console.log('Custom button clicked!');
+        }
+    };
+
+    _this.injectButton(settings);
+};
+
+jQuery(document).ready(function($) {
+    new EasyEditor({
+        element: '#editor',
+        buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'custombutton']
+    });
+});</pre>
+
+        <footer>
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F! 
+            <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :) 
+        </footer>
+    </div>
+
+</body>
+</html>

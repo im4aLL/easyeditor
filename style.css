@@ -14,7 +14,39 @@ body {
     margin: 0 auto;
 }
 
+.container-fluid {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 40px;
+}
+
 h1 {
     font-size: 24px;
-    margin: 50px 0 20px;
+    margin: 50px 0 30px;
+}
+
+h1 span {
+    opacity: 0.5;
+    font-size: 70%;
+}
+
+.p {
+    margin: 30px 0 10px;
+}
+
+.code {
+    margin-bottom: 30px;
+    opacity: 0.6;
+}
+
+footer {
+    margin: 50px 0;
+    font-size: 11px;
+    line-height: 18px;
+    opacity: 0.7;
+}
+
+footer a,
+.p a {
+    color: #0e90dc
 }
