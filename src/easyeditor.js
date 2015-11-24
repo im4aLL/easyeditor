@@ -127,6 +127,10 @@
         var _this = this;
         var inFullArea = arg.inFullArea;
 
+        if(_this.isSelectionOutsideOfEditor() === true) {
+            return false;
+        }
+
         if(inFullArea === false) {
             var selection = _this.getSelection();
             var selectedText = selection.toString();
