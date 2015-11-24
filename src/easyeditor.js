@@ -138,21 +138,43 @@
             var selectedText = selection.toString();
 
             if(selection && selectedText.length > 0) {
-                var range = selection.getRangeAt(0);
-                var node = document.createElement('span');
-                $(node).attr('data-value', 'temp').html(selectedText.replace(/\n/ig, '<br>'));
-                range.deleteContents();
-                range.insertNode(node);
-                $('[data-value="temp"]').contents().unwrap();
 
-                selection.removeAllRanges();
+                var range = selection.getRangeAt(0);
+                var $parent = $(range.commonAncestorContainer.parentNode);
+
+                if($parent.attr('class') === _this.className || $parent.attr('class') === _this.className + '-wrapper') {
+                    var node = document.createElement('span');
+                    $(node).attr('data-value', 'temp').html(selectedText.replace(/\n/ig, '<br>'));
+                    range.deleteContents();
+                    range.insertNode(node);
+
+                    $('[data-value="temp"]').contents().unwrap();
+                }
+                else {
+
+                    var topMostParent;
+                    var hasParentNode = false;
+                    $.each($parent.parentsUntil(_this.elem), function(index, el) {
+                        topMostParent = el;
+                        hasParentNode = true;
+                    });
+
+                    if(hasParentNode === true) {
+                        $(topMostParent).html($(topMostParent).text().replace(/\n/ig, '<br>')).contents().unwrap();
+                    }
+                    else {
+                        $parent.contents().unwrap();
+                    }
+
+                }
+
             }
         }
         else {
             $(_this.elem).html($(_this.elem).text().replace(/\n/ig, '<br>'));
         }
 
-        _this.removeEmptyTags();
+        // _this.removeEmptyTags();
     };
 
     // removing empty tags
@@ -277,7 +299,7 @@
                 }
             });
         }
-        
+
         return result;
     };
 
@@ -417,7 +439,7 @@
 
         $(this.elem).focus();
     };
-    
+
     EasyEditor.prototype.bold = function(){
         var _this = this;
         var settings = {
