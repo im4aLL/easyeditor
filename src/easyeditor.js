@@ -40,7 +40,7 @@
 
         $(_this.elem).keydown(function(e) {
             if (e.keyCode === 13) {
-                document.execCommand('insertHTML', false, '<br><br>');
+                document.execCommand('insertHTML', false, '<br>');
                 return false;
             }
         });
