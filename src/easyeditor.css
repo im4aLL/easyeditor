@@ -8,7 +8,7 @@
 .easyeditor-toolbar {
     border: 1px solid #e9e9e9;
     border-bottom: 0;
-    padding: 20px;
+    padding: 20px 20px 15px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -35,10 +35,11 @@
     display: inline-block;
     padding: 4px 8px;
     float: left;
-    margin-right: 5px;
     min-width: 30px;
     outline: none;
     border-radius: 2px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .easyeditor-toolbar li button:hover {
