@@ -163,6 +163,10 @@
     // wrap selction with a tag
     EasyEditor.prototype.wrapSelectionWithNodeName = function(arg){
         var _this = this;
+        if(_this.isSelectionOutsideOfEditor() === true) {
+            return false;
+        }
+
         var node = {
             name: 'span',
             blockElement: false,
@@ -292,6 +296,9 @@
     // insert a node into cursor point in editor
     EasyEditor.prototype.insertAtCaret = function(node){
         var _this = this;
+        if(_this.isSelectionOutsideOfEditor() === true) {
+            return false;
+        }
 
         if(_this.getSelection()) {
             var range = _this.getSelection().getRangeAt(0);
@@ -301,6 +308,39 @@
             $(node).appendTo(_this.elem);
         }
     };
+
+    EasyEditor.prototype.isSelectionOutsideOfEditor = function(){
+        return !this.elementContainsSelection(document.getElementById(this.elem.substring(1)));
+    };
+
+    EasyEditor.prototype.isOrContains = function(node, container) {
+        while (node) {
+            if (node === container) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+        return false;
+    }
+
+    EasyEditor.prototype.elementContainsSelection = function(el) {
+        var _this = this;
+        var sel;
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.rangeCount > 0) {
+                for (var i = 0; i < sel.rangeCount; ++i) {
+                    if (!_this.isOrContains(sel.getRangeAt(i).commonAncestorContainer, el)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } else if ( (sel = document.selection) && sel.type !== "Control") {
+            return _this.isOrContains(sel.createRange().parentElement(), el);
+        }
+        return false;
+    }
 
     // insert html chunk into editor's temp tag
     EasyEditor.prototype.insertHtml = function(html){
