@@ -62,3 +62,8 @@ footer a,
     font-weight: normal;
     font-style: italic;
 }
+
+pre {
+    max-width: 100%;
+    overflow-x: auto;
+}
