@@ -137,19 +137,13 @@
 
             if(selection && selectedText.length > 0) {
                 var range = selection.getRangeAt(0);
-                var $parent = $(range.commonAncestorContainer.parentNode);
+                var node = document.createElement('span');
+                $(node).attr('data-value', 'temp').html(selectedText.replace(/\n/ig, '<br>'));
+                range.deleteContents();
+                range.insertNode(node);
+                $('[data-value="temp"]').contents().unwrap();
 
-                if($parent.attr('class') === _this.className || $parent.attr('class') === _this.className + '-wrapper') {
-                    var node = document.createElement('span');
-                    $(node).attr('data-value', 'temp').html(selectedText.replace(/\n/ig, '<br>'));
-                    range.deleteContents();
-                    range.insertNode(node);
-
-                    $('[data-value="temp"]').contents().unwrap();
-                }
-                else {
-                    $parent.contents().unwrap();
-                }
+                selection.removeAllRanges();
             }
         }
         else {
@@ -198,10 +192,7 @@
             if (selection.rangeCount) {
 
                 // checking if already wrapped
-                if(_this.isAlreadyWrapped(selection, node)) {
-                    _this.removeWrappedFormatting(selection, node);
-                    return false;
-                }
+                var isWrapped = _this.isAlreadyWrapped(selection, node);
 
                 // wrap node
                 var range = selection.getRangeAt(0).cloneRange();
@@ -240,8 +231,12 @@
                     selection.addRange(range);
                 }
 
-                selection.removeAllRanges();
+                if(isWrapped === true) {
+                    _this.removeWrappedDuplicateTag(tag);
+                }
 
+                _this.removeEmptyTags();
+                selection.removeAllRanges();
             }
         }
     };
@@ -258,26 +253,41 @@
         var _this = this;
         var range = selection.getRangeAt(0);
         var el = $(range.commonAncestorContainer);
+        var result = false;
 
-        if( (el.parent().is(node.name) || node.blockElement === true) && el.parent().hasClass(_this.className) === false ) {
-            return true;
+        if( el.parent().prop('tagName').toLowerCase() === node.name && el.parent().hasClass(_this.className) === false ) {
+            result = true;
+        }
+        else if(node.blockElement === true) {
+            $.each(el.parentsUntil(_this.elem), function(index, el) {
+                var tag = el.tagName.toLowerCase();
+                if( $.inArray(tag, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) !== -1 ) {
+                    result = true;
+                }
+            });
         }
         else {
-            return false;
+            $.each(el.parentsUntil(_this.elem), function(index, el) {
+                var tag = el.tagName.toLowerCase();
+                if( tag === node.name ) {
+                    result = true;
+                }
+            });
         }
+        
+        return result;
     };
 
     // remove wrap if already wrapped with same tag
-    EasyEditor.prototype.removeWrappedFormatting = function(selection, node){
+    EasyEditor.prototype.removeWrappedDuplicateTag = function(tag){
         var _this = this;
-        var range = selection.getRangeAt(0);
-        var el = $(range.commonAncestorContainer);
+        var tagName = tag.tagName;
 
-        if( el.parent().is(node.name) || (node.blockElement === true && el.parent().hasClass(_this.className) === false && el.parent().hasClass(_this.className + '-wrapper') === false && el.parent().find('.' + _this.className).length === 0) ) {
-            el.unwrap();
+        $(tag).unwrap();
+
+        if($(tag).prop('tagName') === tagName) {
+            $(tag).unwrap();
         }
-
-        _this.removeEmptyTags();
     };
 
     // adding attribute in tag
@@ -408,7 +418,7 @@
             buttonIdentifier: 'bold',
             buttonHtml: 'B',
             clickHandler: function(){
-                _this.wrapSelectionWithNodeName('b');
+                _this.wrapSelectionWithNodeName({ nodeName: 'strong', keepHtml: true });
             }
         };
 
@@ -421,7 +431,7 @@
             buttonIdentifier: 'italic',
             buttonHtml: 'I',
             clickHandler: function(){
-                _this.wrapSelectionWithNodeName('i');
+                _this.wrapSelectionWithNodeName({ nodeName: 'em', keepHtml: true });
             }
         };
 
