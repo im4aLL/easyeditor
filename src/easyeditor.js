@@ -35,6 +35,7 @@
         this.$wrapperElem = $(_this.elem).parent();
     };
 
+    // enter and paste key handler
     EasyEditor.prototype.handleKeypress = function(){
         var _this = this;
 
@@ -92,6 +93,7 @@
 
     };
 
+    // allowing resizing image
     EasyEditor.prototype.handleResizeImage = function(){
         var _this = this;
 
@@ -153,6 +155,7 @@
         _this.removeEmptyTags();
     };
 
+    // removing empty tags
     EasyEditor.prototype.removeEmptyTags = function(){
         var _this = this;
         $(_this.elem).html( $(_this.elem).html().replace(/(<(?!\/)[^>]+>)+(<\/[^>]+>)+/, '') );
@@ -323,10 +326,12 @@
         }
     };
 
+    // checking if selection outside of editor or not
     EasyEditor.prototype.isSelectionOutsideOfEditor = function(){
         return !this.elementContainsSelection(document.getElementById(this.elem.substring(1)));
     };
 
+    // node contains in containers or not
     EasyEditor.prototype.isOrContains = function(node, container) {
         while (node) {
             if (node === container) {
@@ -337,6 +342,7 @@
         return false;
     }
 
+    // selected text is inside container
     EasyEditor.prototype.elementContainsSelection = function(el) {
         var _this = this;
         var sel;
@@ -411,7 +417,7 @@
 
         $(this.elem).focus();
     };
-
+    
     EasyEditor.prototype.bold = function(){
         var _this = this;
         var settings = {
