@@ -11,6 +11,8 @@
         this.buttons = options.buttons || defaultButtons;
         this.buttonsHtml = options.buttonsHtml || null;
         this.overwriteButtonSettings = options.overwriteButtonSettings || null;
+        this.css = options.css || null;
+        this.onLoaded = typeof options.onLoaded === 'function' ? options.onLoaded : null;
 
         this.attachEvents();
     }
@@ -22,25 +24,55 @@
         this.handleKeypress();
         this.handleResizeImage();
         this.utils();
+
+        if(this.onLoaded !== null) {
+            this.onLoaded.call(this);
+        }
     };
 
     // Adding necessary classes and attributes in editor
     EasyEditor.prototype.bootstrap = function() {
         var _this = this;
+        var tag = $(_this.elem).prop('tagName').toLowerCase();
 
-        $(_this.elem)
-            .attr('contentEditable', true)
-            .addClass(_this.className)
-            .wrap('<div class="'+ _this.className +'-wrapper"></div>');
+        if(tag === 'textarea' || tag === 'input') {
+            var placeholderText = $(_this.elem).attr('placeholder');
+            var margin = $(_this.elem).css('margin');
 
-        this.$wrapperElem = $(_this.elem).parent();
+            $(_this.elem).after('<div id="' + _this.elem.substring(1) + '-editor" placeholder="' + placeholderText + '">' + $(_this.elem).val() + '</div>');
+            $(_this.elem).hide().addClass(_this.className + '-bind');
+
+            _this.elem = _this.elem + '-editor';
+
+
+            $(_this.elem)
+                .attr('contentEditable', true)
+                .addClass(_this.className)
+                .wrap('<div class="'+ _this.className +'-wrapper" style="margin: '+ margin +'"></div>');
+
+            this.$wrapperElem = $(_this.elem).parent();
+        }
+        else {
+            $(_this.elem)
+                .attr('contentEditable', true)
+                .addClass(_this.className)
+                .wrap('<div class="'+ _this.className +'-wrapper"></div>');
+
+            this.$wrapperElem = $(_this.elem).parent();
+        }
+
+        if(_this.css !== null) {
+            $(_this.elem).css(_this.css);
+        }
+
+        this.containerClass = '.' + _this.className +'-wrapper';
     };
 
     // enter and paste key handler
     EasyEditor.prototype.handleKeypress = function(){
         var _this = this;
 
-        $(_this.elem).keydown(function(e) {
+        $('html').delegate(_this.elem, 'keydown', function(e) {
             if(e.keyCode === 13 && _this.isSelectionInsideElement('li') === false) {
                 e.preventDefault();
                 if(e.shiftKey === true) {
@@ -48,7 +80,7 @@
                 }
                 else {
                     document.execCommand('insertHTML', false, '<br><br>');
-                }   
+                }
             }
         });
 
@@ -78,7 +110,7 @@
             containerNode = containerNode.parentNode;
         }
         return false;
-    }
+    };
 
     // adding toolbar
     EasyEditor.prototype.addToolbar = function(){
@@ -121,7 +153,11 @@
 
         // bind click event
         if(typeof settings.clickHandler === 'function') {
-            _this.$toolbarContainer.find('.toolbar-'+ settings.buttonIdentifier).click(settings.clickHandler);
+            $('html').delegate(_this.containerClass +' .toolbar-'+ settings.buttonIdentifier, 'click', function(event){
+                event.preventDefault();
+                settings.clickHandler.call(this);
+                $(_this.elem).trigger('keyup');
+            });
         }
     };
 
@@ -141,12 +177,12 @@
     EasyEditor.prototype.handleResizeImage = function(){
         var _this = this;
 
-        $(_this.elem).delegate('figure', 'click', function(event) {
+        $('html').delegate(_this.containerClass + ' figure', 'click', function(event) {
             event.stopPropagation();
             $(this).addClass('is-resizable');
         });
 
-        $(_this.elem).delegate('figure.is-resizable', 'mousemove', function() {
+        $('html').delegate(_this.containerClass + ' figure.is-resizable', 'mousemove', function(event) {
             $(this).find('img').css({ 'width' : $(this).width() + 'px' });
         });
 
@@ -231,8 +267,8 @@
     EasyEditor.prototype.removeBlockElementFromSelection = function(selection, removeBr){
         var _this = this;
         var result;
-        
-        var removeBr = removeBr === undefined ? false : removeBr;
+
+        removeBr = removeBr === undefined ? false : removeBr;
         var removeBrNode = '';
         if(removeBr === true) {
             removeBrNode = ', br';
@@ -342,7 +378,7 @@
         var selection = _this.getSelection();
         if(selection && selection.toString().length > 0 && selection.rangeCount) {
             var selectedHtml = _this.removeBlockElementFromSelection(selection, true);
-            var listArray = selectedHtml.split('\n').filter(function(v){return v!==''});
+            var listArray = selectedHtml.split('\n').filter(function(v){return v!=='';});
             var wrappedListHtml = $.map(listArray, function(item) {
                 return '<li>' + $.trim(item) + '</li>';
             });
@@ -460,7 +496,7 @@
             node = node.parentNode;
         }
         return false;
-    }
+    };
 
     // selected text is inside container
     EasyEditor.prototype.elementContainsSelection = function(el) {
@@ -480,7 +516,7 @@
             return _this.isOrContains(sel.createRange().parentElement(), el);
         }
         return false;
-    }
+    };
 
     // insert html chunk into editor's temp tag
     EasyEditor.prototype.insertHtml = function(html){
@@ -491,9 +527,20 @@
     // utility of editor
     EasyEditor.prototype.utils = function(){
         var _this = this;
-        $('.'+ _this.className +'-modal-close').click(function() {
+
+        $('html').delegate('.'+ _this.className +'-modal-close', 'click', function(event) {
+            event.preventDefault();
             _this.closeModal('#' + $(this).closest('.'+ _this.className + '-modal').attr('id'));
         });
+
+        if( $('.' + _this.className + '-bind').length > 0 ) {
+            var bindData;
+            $('html').delegate(_this.elem, 'click keyup', function() {
+                var el = this;
+                clearTimeout(bindData);
+                bindData = setTimeout(function(){ $('.' + _this.className + '-bind').html( $(el).html() ); }, 250);
+            });
+        }
     };
 
     // youtube video id from url

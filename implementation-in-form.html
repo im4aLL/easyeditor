@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Easy editor - Implementation in form</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- easy editor stylesheet -->
+    <link rel="stylesheet" href="src/easyeditor.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Easy editor <span>Implementation in form</span></h1>
+
+        <!-- easy editor wil apply in this div -->
+        <!-- <div id="editor" placeholder="Type here ... "></div> -->
+
+        <form action="" id="myform" class="demo-form">
+            <label for="title">Title</label>
+            <input type="text" id="title" placeholder="Enter title" value="Sample article title">
+
+            <label for="description">Description</label>
+            <textarea name="description" id="description" rows="10" placeholder="Enter article body">Lorem <b>ipsum</b> dolor sit amet, consectetur adipisicing elit. Ab, perferendis ut consequuntur corrupti maxime possimus atque quod doloribus, blanditiis amet cum vitae obcaecati nihil, sed nesciunt nemo recusandae in repellendus.</textarea>
+
+            <button type="submit" class="btn">Save article</button> &nbsp;&nbsp;&nbsp; <small>After you hit save data will show in below</small>
+        </form>
+
+        <div id="result">
+            <h3>Title</h3>
+            <div class="title p"></div>
+
+            <br><br>
+            <h3>Description</h3>
+            <div class="description p"></div>
+        </div>
+
+
+        <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
+
+        <p class="p">HTML:</p>
+        <pre class="code">&lt;form action=&quot;&quot; id=&quot;myform&quot; class=&quot;demo-form&quot;&gt;
+    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;title&quot; placeholder=&quot;Enter title&quot;&gt;
+
+    &lt;label for=&quot;description&quot;&gt;Description&lt;/label&gt;
+    &lt;textarea name=&quot;description&quot; id=&quot;<mark>description</mark>&quot; rows=&quot;10&quot; placeholder=&quot;Enter article body&quot;&gt;&lt;/textarea&gt;
+
+    &lt;button type=&quot;submit&quot; class=&quot;btn&quot;&gt;Save article&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+
+        <p class="p">CSS:</p>
+        <pre class="code">&#x3C;link rel=&#x22;stylesheet&#x22; href=&#x22;path_to/easyeditor.css&#x22;&#x3E;</pre>
+
+        <p class="p">JS:</p>
+        <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+
+&#x3C;script&#x3E;
+    jQuery(document).ready(function($) {
+        new EasyEditor({
+            element: &#039;#description&#039;,
+            css: ({
+                minHeight: &#039;300px&#039;,
+                maxHeight: &#039;500px&#039;
+            })
+        });
+
+        $(&#039;your_submit_button&#039;).click(function(event) {
+            event.preventDefault();
+
+            var data = {
+                title: $(&#039;#title&#039;).val(),
+                description: $(&#039;#description&#039;).val()
+            };
+
+            console.log(data);
+        });
+
+    });
+&#x3C;/script&#x3E;</pre>
+
+        <footer>
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
+            <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :)
+        </footer>
+
+        <!-- comment starts -->
+        <script src="https://apis.google.com/js/plusone.js"></script>
+        <div id="comments"></div>
+        <script>
+            gapi.comments.render('comments', {
+                href: window.location,
+                width: '960',
+                first_party_property: 'BLOGGER',
+                view_type: 'FILTERED_POSTMOD'
+            });
+        </script>
+        <!-- comment starts -->
+
+    </div>
+
+    <!-- dependancy js -->
+    <script src="vendor/jquery.min.js"></script>
+    <!-- easy editor core js -->
+    <script src="src/easyeditor.js"></script>
+
+    <script>
+        jQuery(document).ready(function($) {
+            new EasyEditor({
+                element: '#description',
+                css: ({
+                    minHeight: '300px',
+                    maxHeight: '500px'
+                }),
+                onLoaded: function(){
+                    console.log('Easy Editor Loaded!');
+                }
+            });
+
+
+            $('#myform .btn').click(function(event) {
+                event.preventDefault();
+
+                var data = {
+                    title: $('#title').val(),
+                    description: $('#description').val()
+                };
+
+                console.log(data);
+
+                $('#result .title').html(data.title);
+                $('#result .description').html(data.description);
+            });
+        });
+    </script>
+
+</body>
+</html>

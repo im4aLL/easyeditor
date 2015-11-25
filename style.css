@@ -67,3 +67,39 @@ pre {
     max-width: 100%;
     overflow-x: auto;
 }
+
+.demo-form input,
+.demo-form textarea {
+    border: 1px solid #ddd;
+    padding: 15px;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 10px 0 15px;
+}
+
+.demo-form label {
+    display: inline-block;
+}
+
+.demo-form .btn {
+    background: #0e90dc;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.demo-form .btn:hover {
+    opacity: 0.8;
+}
+
+#result {
+    background: #f9f9f9;
+    padding: 40px;
+    margin: 50px 0;
+}
