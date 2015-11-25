@@ -37,7 +37,13 @@
 
         if(tag === 'textarea' || tag === 'input') {
             var placeholderText = $(_this.elem).attr('placeholder');
-            var margin = $(_this.elem).css('margin');
+
+            var marginTop = $(_this.elem).css('marginTop') || 0;
+            var marginBottom = $(_this.elem).css('marginBottom') || 0;
+            var style = '';
+            if(marginTop.length > 0 || marginBottom.length > 0) {
+                style = ' style="margin-top: ' + marginTop + '; margin-bottom: ' + marginBottom + '" ';
+            }
 
             $(_this.elem).after('<div id="' + _this.elem.substring(1) + '-editor" placeholder="' + placeholderText + '">' + $(_this.elem).val() + '</div>');
             $(_this.elem).hide().addClass(_this.className + '-bind');
@@ -48,7 +54,7 @@
             $(_this.elem)
                 .attr('contentEditable', true)
                 .addClass(_this.className)
-                .wrap('<div class="'+ _this.className +'-wrapper" style="margin: '+ margin +'"></div>');
+                .wrap('<div class="'+ _this.className +'-wrapper"' + style + '></div>');
 
             this.$wrapperElem = $(_this.elem).parent();
         }
