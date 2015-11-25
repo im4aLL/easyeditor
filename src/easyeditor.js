@@ -6,7 +6,7 @@
         this.elem = options.element;
         this.className = options.className || 'easyeditor';
 
-        var allButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'image', 'youtube', 'x'];
+        var allButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'image', 'youtube', 'list', 'x'];
         var defaultButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright'];
         this.buttons = options.buttons || defaultButtons;
         this.buttonsHtml = options.buttonsHtml || null;
@@ -41,9 +41,14 @@
         var _this = this;
 
         $(_this.elem).keydown(function(e) {
-            if (e.keyCode === 13) {
-                document.execCommand('insertHTML', false, '<br>');
-                return false;
+            if(e.keyCode === 13 && _this.isSelectionInsideElement('li') === false) {
+                e.preventDefault();
+                if(e.shiftKey === true) {
+                    document.execCommand('insertHTML', false, '<br>');
+                }
+                else {
+                    document.execCommand('insertHTML', false, '<br><br>');
+                }   
             }
         });
 
@@ -54,6 +59,26 @@
         });
 
     };
+
+    EasyEditor.prototype.isSelectionInsideElement = function(tagName) {
+        var sel, containerNode;
+        tagName = tagName.toUpperCase();
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.rangeCount > 0) {
+                containerNode = sel.getRangeAt(0).commonAncestorContainer;
+            }
+        } else if ( (sel = document.selection) && sel.type != "Control" ) {
+            containerNode = sel.createRange().parentElement();
+        }
+        while (containerNode) {
+            if (containerNode.nodeType == 1 && containerNode.tagName == tagName) {
+                return true;
+            }
+            containerNode = containerNode.parentNode;
+        }
+        return false;
+    }
 
     // adding toolbar
     EasyEditor.prototype.addToolbar = function(){
@@ -202,6 +227,27 @@
         $(_this.elem).html( $(_this.elem).html().replace(/(<(?!\/)[^>]+>)+(<\/[^>]+>)+/, '') );
     };
 
+    // remove block elemenet from selection
+    EasyEditor.prototype.removeBlockElementFromSelection = function(selection, removeBr){
+        var _this = this;
+        var result;
+        
+        var removeBr = removeBr === undefined ? false : removeBr;
+        var removeBrNode = '';
+        if(removeBr === true) {
+            removeBrNode = ', br';
+        }
+
+        var range = selection.getRangeAt(0);
+        var selectedHtml = range.cloneContents();
+        var temp = document.createElement('temp');
+        $(temp).html(selectedHtml);
+        $(temp).find('h1, h2, h3, h4, h5, h6, p, div' + removeBrNode).each(function() { $(this).replaceWith(this.childNodes); });
+        result = $(temp).html();
+
+        return result;
+    };
+
     // wrap selction with a tag
     EasyEditor.prototype.wrapSelectionWithNodeName = function(arg){
         var _this = this;
@@ -232,57 +278,85 @@
 
         var selection = _this.getSelection();
 
-        if(selection && selection.toString().length > 0) {
-            if (selection.rangeCount) {
+        if(selection && selection.toString().length > 0 && selection.rangeCount) {
+            // checking if already wrapped
+            var isWrapped = _this.isAlreadyWrapped(selection, node);
 
-                // checking if already wrapped
-                var isWrapped = _this.isAlreadyWrapped(selection, node);
+            // wrap node
+            var range = selection.getRangeAt(0).cloneRange();
+            var tag = document.createElement(node.name);
 
-                // wrap node
-                var range = selection.getRangeAt(0).cloneRange();
-                var tag = document.createElement(node.name);
+                // adding necessary attribute to tag
+                if(node.style !== null || node.class !== null || node.attribute !== null) {
+                    tag = _this.addAttribute(tag, node);
+                }
 
-                    // adding necessary attribute to tag
-                    if(node.style !== null || node.class !== null || node.attribute !== null) {
-                        tag = _this.addAttribute(tag, node);
-                    }
+            // if selection contains html, surround contents has some problem with pre html tag and raw text selection
+            if(_this.selectionContainsHtml(range)) {
+                range = selection.getRangeAt(0);
 
-                // if selection contains html, surround contents has some problem with pre html tag and raw text selection
-                if(_this.selectionContainsHtml(range)) {
-                    range = selection.getRangeAt(0);
-
-                    if(node.keepHtml === true) {
-                        var clonedSelection = range.cloneContents();
-                        var div = document.createElement('div');
-                        div.appendChild(clonedSelection);
-                        $(tag).html(div.innerHTML);
-                    }
-                    else {
-                        tag.textContent = selection.toString();
-                    }
-
-                    range.deleteContents();
-                    range.insertNode(tag);
-
-                    if(range.commonAncestorContainer.localName === node.name) {
-                        $(range.commonAncestorContainer).contents().unwrap();
-                        _this.removeEmptyTags();
-                    }
+                if(node.keepHtml === true) {
+                    var clonedSelection = range.cloneContents();
+                    var div = document.createElement('div');
+                    div.appendChild(clonedSelection);
+                    $(tag).html(div.innerHTML);
                 }
                 else {
-                    range.surroundContents(tag);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
+                    tag.textContent = selection.toString();
                 }
 
-                if(isWrapped === true) {
-                    _this.removeWrappedDuplicateTag(tag);
-                }
+                range.deleteContents();
+                range.insertNode(tag);
 
-                _this.removeEmptyTags();
-                selection.removeAllRanges();
+                if(range.commonAncestorContainer.localName === node.name) {
+                    $(range.commonAncestorContainer).contents().unwrap();
+                    _this.removeEmptyTags();
+                }
             }
+            else {
+                range.surroundContents(tag);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+
+            if(isWrapped === true) {
+                _this.removeWrappedDuplicateTag(tag);
+            }
+
+            _this.removeEmptyTags();
+            selection.removeAllRanges();
         }
+    };
+
+    // wrap selection with unordered list
+    EasyEditor.prototype.wrapSelectionWithList = function(tagname){
+        var _this = this;
+        tagname = tagname || 'ul';
+
+        // preventing outside selection
+        if(_this.isSelectionOutsideOfEditor() === true) {
+            return false;
+        }
+
+        // if text selected
+        var selection = _this.getSelection();
+        if(selection && selection.toString().length > 0 && selection.rangeCount) {
+            var selectedHtml = _this.removeBlockElementFromSelection(selection, true);
+            var listArray = selectedHtml.split('\n').filter(function(v){return v!==''});
+            var wrappedListHtml = $.map(listArray, function(item) {
+                return '<li>' + $.trim(item) + '</li>';
+            });
+
+            var node = document.createElement(tagname);
+            $(node).html(wrappedListHtml);
+
+            var range = selection.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(node);
+
+            selection.removeAllRanges();
+        }
+
     };
 
     // if selection contains html tag, surround content fails if selection contains html
@@ -614,6 +688,19 @@
             buttonHtml: 'Link',
             clickHandler: function(){
                 _this.wrapSelectionWithNodeName({ nodeName: 'a', attribute: ['href', prompt('Insert link', '')] });
+            }
+        };
+
+        _this.injectButton(settings);
+    };
+
+    EasyEditor.prototype.list = function(){
+        var _this = this;
+        var settings = {
+            buttonIdentifier: 'list',
+            buttonHtml: 'List',
+            clickHandler: function(){
+                _this.wrapSelectionWithList();
             }
         };
 

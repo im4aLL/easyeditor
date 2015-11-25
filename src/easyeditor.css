@@ -99,3 +99,8 @@
     border-bottom: 1px solid #ddd;
     z-index: 5;
 }
+
+.easyeditor ul,
+.easyeditor ol {
+    margin-left: 30px;
+}
