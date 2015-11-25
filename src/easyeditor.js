@@ -10,6 +10,7 @@
         var defaultButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright'];
         this.buttons = options.buttons || defaultButtons;
         this.buttonsHtml = options.buttonsHtml || null;
+        this.overwriteButtonSettings = options.overwriteButtonSettings || null;
 
         this.attachEvents();
     }
@@ -68,14 +69,32 @@
     EasyEditor.prototype.injectButton = function(settings){
         var _this = this;
 
+        // overwritting default button settings
+        if(_this.overwriteButtonSettings !== null && _this.overwriteButtonSettings[settings.buttonIdentifier] !== undefined) {
+            var newSettings = $.extend({}, settings, _this.overwriteButtonSettings[settings.buttonIdentifier]);
+            settings = newSettings;
+        }
+
+        // if button html exists overwrite default button html
         if(_this.buttonsHtml !== null && _this.buttonsHtml[settings.buttonIdentifier] !== undefined) {
             settings.buttonHtml = _this.buttonsHtml[settings.buttonIdentifier];
         }
 
-        if(settings.buttonHtml) {
-            _this.$toolbarContainer.find('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ settings.buttonIdentifier.replace(/\W/g, ' ') +'">'+ settings.buttonHtml +'</button></li>');
+        // if buttonTitle parameter exists
+        var buttonTitle;
+        if(settings.buttonTitle) {
+            buttonTitle = settings.buttonTitle;
+        }
+        else {
+            buttonTitle = settings.buttonIdentifier.replace(/\W/g, ' ');
         }
 
+        // adding button html
+        if(settings.buttonHtml) {
+            _this.$toolbarContainer.find('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
+        }
+
+        // bind click event
         if(typeof settings.clickHandler === 'function') {
             _this.$toolbarContainer.find('.toolbar-'+ settings.buttonIdentifier).click(settings.clickHandler);
         }

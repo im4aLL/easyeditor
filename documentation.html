@@ -112,6 +112,34 @@ EasyEditor.prototype.h5 = function(){
 };
 </pre>
 
+        <p class="p">Overwrite default button settings: </p>
+        <pre class="code">var easyEditor = new EasyEditor({
+    element: &#039;#editor&#039;,
+    buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;h3&#039;, &#039;h4&#039;, &#039;alignleft&#039;, &#039;aligncenter&#039;, &#039;alignright&#039;],
+    overwriteButtonSettings: {
+        &#039;bold&#039; : {
+            buttonIdentifier: &#039;overwritten-bold&#039;,
+            buttonHtml: &#039;Overwritten Bold&#039;,
+            buttonTitle: &#039;Make text bold&#039;,
+            clickHandler: function(){
+                easyEditor.wrapSelectionWithNodeName({ nodeName: &#039;b&#039;, keepHtml: true });
+            }
+        },
+        &#039;italic&#039;: {
+            buttonHtml: &#039;Overwritten Italic&#039;,
+            buttonTitle: &#039;Make text italic&#039;,
+        }
+    }
+});
+
+// default bold button settings was
+// ================================
+// buttonIdentifier: &#039;bold&#039;,
+// buttonHtml: &#039;B&#039;,
+// clickHandler: function(){
+//     _this.wrapSelectionWithNodeName({ nodeName: &#039;strong&#039;, keepHtml: true });
+// }</pre>
+
         <p class="p">Insert node at caret or cursor position: </p>
         <pre class="code">EasyEditor.prototype.imageurl = function(){
     var _this = this;
