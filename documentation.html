@@ -99,6 +99,7 @@ EasyEditor.prototype.h5 = function(){
             _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'span' });
             // or
             _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'a', attribute: ['href', prompt('Insert link', '')] });
+            _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'a', attribute: { 'data-value': 1, 'data-item': 'item-value' } });
             // or
             _this.<mark>wrapSelectionWithNodeName</mark>({ nodeName: 'p', style: 'text-align: right', class: 'text-right', keepHtml: true });
             // or

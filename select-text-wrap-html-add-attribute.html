@@ -39,6 +39,7 @@
             buttonHtml: 'Wrap selected text with span tag with data-value="Awesome"',
             clickHandler: function(){
                 _this.wrapSelectionWithNodeName({ nodeName: 'span', attribute: ['data-value', prompt('Enter your custom value e.g Awesome', 'Awesome')] });
+                // or you can add multiple attribute by attribute: { 'data-value': 1, 'data-item': 'item-value' }
             }
         };
 
@@ -86,7 +87,14 @@
                 buttonIdentifier: 'span-with-attribute',
                 buttonHtml: 'Wrap selected text with span tag ask for data-value="Awesome"',
                 clickHandler: function(){
+                    // single attribute
                     _this.wrapSelectionWithNodeName({ nodeName: 'span', attribute: ['data-value', prompt('Enter your custom value e.g Awesome', 'Awesome')] });
+
+                    // multiple attribute
+                    // _this.wrapSelectionWithNodeName({
+                    //     nodeName: 'span',
+                    //     attribute: { 'data-value': 1, 'data-item': 'item-value' }
+                    // });
                 }
             };
 

@@ -326,7 +326,12 @@
         }
 
         if(node.attribute !== null) {
-            $(tag).attr(node.attribute[0], node.attribute[1]);
+            if($.isArray(node.attribute) === true) {
+                $(tag).attr(node.attribute[0], node.attribute[1]);
+            }
+            else {
+                $(tag).attr(node.attribute);
+            }
         }
 
         return tag;
