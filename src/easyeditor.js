@@ -403,7 +403,7 @@
 
         $(tag).unwrap();
 
-        if($(tag).prop('tagName') === tagName) {
+        if($(tag).prop('tagName') === tagName && $(tag).parent().hasClass(_this.className) === false && $(tag).parent().hasClass(_this.className + '-wrapper')) {
             $(tag).unwrap();
         }
     };
