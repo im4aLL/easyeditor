@@ -22,11 +22,11 @@
         <h4>Editor two: </h4>
         <div class="editor" placeholder="Type here editor 2 ... "></div>
 
-        <!-- <h4>Editor three:</h4>
+        <h4>Editor three:</h4>
         <div class="editor-another" placeholder="Type here editor 3 ... "></div>
 
         <h4>Editor in textarea:</h4>
-        <textarea name="editor"></textarea> -->
+        <textarea name="editor" placeholder="Type here editor 4 ... "></textarea>
 
 
         <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
@@ -67,13 +67,13 @@
                 buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
             });
 
-            // $('.editor-another').easyEditor({
-            //     buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'x']
-            // });
+            $('.editor-another').easyEditor({
+                buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'x']
+            });
 
-            // $('textarea[name="editor"]').easyEditor({
-            //     buttons: ['bold', 'link', 'h2', 'x']
-            // });
+            $('textarea[name="editor"]').easyEditor({
+                buttons: ['bold', 'link', 'h2', 'x']
+            });
         });
     </script>
 

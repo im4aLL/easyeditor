@@ -70,10 +70,9 @@
     EasyEditor.prototype.handleKeypress = function(){
         var _this = this;
 
-        $('html').delegate(_this.elem, 'keydown', function(e) {
+        $(_this.elem).keydown(function(e) {
             if(e.keyCode === 13 && _this.isSelectionInsideElement('li') === false) {
                 e.preventDefault();
-                console.log(e.shiftKey);
 
                 if(e.shiftKey === true) {
                     document.execCommand('insertHTML', false, '<br>');
