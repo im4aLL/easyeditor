@@ -63,10 +63,13 @@
         }
 
         this.containerClass = '.' + _this.className +'-wrapper';
+
+        if(typeof _this.elem === 'string') {
+            _this.elem = $(_this.elem).get(0);
+        }
     };
 
     // enter and paste key handler
-    // fix this mother fucker
     EasyEditor.prototype.handleKeypress = function(){
         var _this = this;
 
@@ -755,7 +758,7 @@
         _this.injectButton(settings);
     };
 
-    // window.EasyEditor = EasyEditor;
+    window.EasyEditor = EasyEditor;
 
     $.fn.easyEditor = function ( options ) {
         return this.each(function () {

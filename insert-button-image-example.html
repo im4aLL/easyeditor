@@ -30,7 +30,7 @@
 
         <p class="p">JS:</p>
         <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
-&#x3C;script src=&#x22;path_to/easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
 
 &#x3C;script&#x3E;
     EasyEditor.prototype.imageurl = function(){
@@ -57,8 +57,7 @@
     };
 
     jQuery(document).ready(function($) {
-        new EasyEditor({
-            element: &#x27;#editor&#x27;,
+        new EasyEditor('#editor', {
             buttons: [&#x27;bold&#x27;, &#x27;italic&#x27;, &#x27;link&#x27;, &#x27;h2&#x27;, &#x27;h3&#x27;, &#x27;h4&#x27;, &#x27;imageurl&#x27;]
         });
     });
@@ -88,7 +87,7 @@
     <!-- dependancy js -->
     <script src="vendor/jquery.min.js"></script>
     <!-- easy editor core js -->
-    <script src="src/easyeditor.js"></script>
+    <script src="src/jquery.easyeditor.js"></script>
 
     <script>
         EasyEditor.prototype.imageurl = function(){
@@ -115,8 +114,7 @@
         };
 
         jQuery(document).ready(function($) {
-            new EasyEditor({
-                element: '#editor',
+            new EasyEditor('#editor', {
                 buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'imageurl']
             });
         });

@@ -43,11 +43,11 @@
 
     <p class="p">JS:</p>
     <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
-&#x3C;script src=&#x22;path_to/easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
 
 &#x3C;script&#x3E;
 jQuery(document).ready(function($) {
-    new EasyEditor({ element: &#x27;#editor&#x27; });
+    new EasyEditor('#editor');
 });
 &#x3C;/script&#x3E;</pre>
 
@@ -92,7 +92,7 @@ jQuery(document).ready(function($) {
 
 <script src="vendor/jquery.min.js"></script>
 <script src="vendor/jquery.form.min.js"></script>
-<script src="src/easyeditor.js"></script>
+<script src="src/jquery.easyeditor.js"></script>
 <script>
 
     EasyEditor.prototype.image = function(){
@@ -134,8 +134,7 @@ jQuery(document).ready(function($) {
 
 
     jQuery(document).ready(function($) {
-        var easyEditor = new EasyEditor({
-            element: '#editor',
+        var easyEditor = new EasyEditor('#editor', {
             buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'image', 'youtube', 'list', 'x']
         });
 

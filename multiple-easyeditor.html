@@ -17,19 +17,33 @@
 
         <!-- easy editor wil apply in this div -->
         <h4>Editor one: </h4>
-        <div class="editor" placeholder="Type here editor 1 ... "></div>
+        <div class="editor" placeholder="Type here editor 1 ... ">Editor 1 ... </div>
 
         <h4>Editor two: </h4>
-        <div class="editor" placeholder="Type here editor 2 ... "></div>
+        <div class="editor" placeholder="Type here editor 2 ... ">Editor 2 ...</div>
 
         <h4>Editor three:</h4>
-        <div class="editor-another" placeholder="Type here editor 3 ... "></div>
+        <div class="editor-another" placeholder="Type here editor 3 ... ">Editor 3 ...</div>
 
         <h4>Editor in textarea:</h4>
-        <textarea name="editor" placeholder="Type here editor 4 ... "></textarea>
+        <textarea name="editor" placeholder="Type here editor 4 ... ">Editor 4 ...</textarea>
 
 
         <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
+
+
+        <p class="p">Usage: </p>
+        <pre class="code">$(&#039;.editor&#039;).easyEditor({
+    buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;h3&#039;, &#039;h4&#039;, &#039;alignleft&#039;, &#039;aligncenter&#039;, &#039;alignright&#039;, &#039;quote&#039;, &#039;code&#039;, &#039;list&#039;, &#039;x&#039;]
+});
+
+$(&#039;.editor-another&#039;).easyEditor({
+    buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;h3&#039;, &#039;x&#039;]
+});
+
+$(&#039;textarea[name=&quot;editor&quot;]&#039;).easyEditor({
+    buttons: [&#039;bold&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;x&#039;]
+});</pre>
 
         <footer>
             EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
@@ -38,7 +52,7 @@
         </footer>
 
         <!-- comment starts -->
-        <!-- <script src="https://apis.google.com/js/plusone.js"></script>
+        <script src="https://apis.google.com/js/plusone.js"></script>
         <div id="comments"></div>
         <script>
             gapi.comments.render('comments', {
@@ -47,7 +61,7 @@
                 first_party_property: 'BLOGGER',
                 view_type: 'FILTERED_POSTMOD'
             });
-        </script> -->
+        </script>
         <!-- comment starts -->
 
     </div>
@@ -59,10 +73,6 @@
 
     <script>
         jQuery(document).ready(function($) {
-            // new EasyEditor({
-            //     element: '#editor'
-            // });
-
             $('.editor').easyEditor({
                 buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x']
             });

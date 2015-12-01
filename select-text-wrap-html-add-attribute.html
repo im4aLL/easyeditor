@@ -29,7 +29,7 @@
 
         <p class="p">JS:</p>
         <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
-&#x3C;script src=&#x22;path_to/easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
 
 &lt;script&gt;
     EasyEditor.prototype.spanWithAttribute = function(){
@@ -47,8 +47,7 @@
     };
 
     jQuery(document).ready(function($) {
-        new EasyEditor({
-            element: '#editor',
+        new EasyEditor('#editor', {
             buttons: ['bold', 'italic', 'link', 'spanWithAttribute']
         });
     });
@@ -78,7 +77,7 @@
     <!-- dependancy js -->
     <script src="vendor/jquery.min.js"></script>
     <!-- easy editor core js -->
-    <script src="src/easyeditor.js"></script>
+    <script src="src/jquery.easyeditor.js"></script>
 
     <script>
         EasyEditor.prototype.spanWithAttribute = function(){
@@ -102,8 +101,7 @@
         };
 
         jQuery(document).ready(function($) {
-            new EasyEditor({
-                element: '#editor',
+            new EasyEditor('#editor', {
                 buttons: ['bold', 'italic', 'link', 'spanWithAttribute']
             });
         });

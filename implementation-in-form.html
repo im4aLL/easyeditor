@@ -55,12 +55,11 @@
 
         <p class="p">JS:</p>
         <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
-&#x3C;script src=&#x22;path_to/easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
 
 &#x3C;script&#x3E;
     jQuery(document).ready(function($) {
-        new EasyEditor({
-            element: &#039;#description&#039;,
+        new EasyEditor('#description', {
             css: ({
                 minHeight: &#039;300px&#039;,
                 maxHeight: &#039;500px&#039;
@@ -105,12 +104,11 @@
     <!-- dependancy js -->
     <script src="vendor/jquery.min.js"></script>
     <!-- easy editor core js -->
-    <script src="src/easyeditor.js"></script>
+    <script src="src/jquery.easyeditor.js"></script>
 
     <script>
         jQuery(document).ready(function($) {
-            new EasyEditor({
-                element: '#description',
+            new EasyEditor('#description', {
                 css: ({
                     minHeight: '300px',
                     maxHeight: '500px'
