@@ -1,5 +1,5 @@
 ## EasyEditor
-A jQuery rich text html / wysiwyg editor, file size 9 KB
+A jQuery richtext html / wysiwyg editor, (very lightweight, easy and simple)
 
 * Demo: [http://habibhadi.com/lab/easyeditor/](http://habibhadi.com/lab/easyeditor/)
 * Examples: [http://habibhadi.com/lab/easyeditor/examples.html](http://habibhadi.com/lab/easyeditor/examples.html)
