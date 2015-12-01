@@ -12,12 +12,23 @@
 
         <p class="p"><a href="examples.html">Checkout all examples</a>. Following documentation seems wired but you will get what you need.</p>
 
+        <p class="p">Usage: </p>
+        <pre class="code">new EasyEditor('#selector', {
+    options: options
+});
+
+or
+
+$('#selector').easyEditor({
+    options: options
+});
+</pre>
+
         <p class="p">Supported default buttons: </p>
         <pre class="code">['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'x']</pre>
 
         <p class="p">How to use icon font in button text: e.g. If you are planning to use font awesome then include fontawesome css and do like this - </p>
-        <pre class="code">var easyEditor = new EasyEditor({
-    element: &#039;#editor&#039;,
+        <pre class="code">var easyEditor = new EasyEditor(&#039;#editor&#039;, {
     buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;h3&#039;, &#039;h4&#039;, &#039;alignleft&#039;, &#039;aligncenter&#039;, &#039;alignright&#039;, &#039;quote&#039;, &#039;code&#039;, &#039;image&#039;, &#039;youtube&#039;, &#039;x&#039;],
     <mark>buttonsHtml</mark>: {
         &#039;bold&#039;: &#039;&lt;i class=&quot;fa fa-bold&quot;&gt;&lt;/i&gt;&#039;,
@@ -69,8 +80,7 @@
 };
 
 jQuery(document).ready(function($) {
-    new EasyEditor({
-        element: '#editor',
+    new EasyEditor('#editor', {
         buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', '<mark>custombutton</mark>']
     });
 });</pre>
@@ -113,8 +123,7 @@ EasyEditor.prototype.h5 = function(){
 </pre>
 
         <p class="p">Overwrite default button settings: </p>
-        <pre class="code">var easyEditor = new EasyEditor({
-    element: &#039;#editor&#039;,
+        <pre class="code">var easyEditor = new EasyEditor(&#039;#editor&#039;, {
     buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;h2&#039;, &#039;h3&#039;, &#039;h4&#039;, &#039;alignleft&#039;, &#039;aligncenter&#039;, &#039;alignright&#039;],
     overwriteButtonSettings: {
         &#039;bold&#039; : {
@@ -213,8 +222,7 @@ EasyEditor.prototype.image = function(){
 };
 
 jQuery(document).ready(function($) {
-    var <mark>easyEditor</mark> = new EasyEditor({
-        element: &#039;#editor&#039;,
+    var <mark>easyEditor</mark> = new EasyEditor(&#039;#editor&#039;, {
         buttons: [&#039;bold&#039;, &#039;italic&#039;, &#039;link&#039;, &#039;image&#039;]
     });
 

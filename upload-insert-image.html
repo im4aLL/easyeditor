@@ -51,7 +51,7 @@
         <p class="p">JS:</p>
         <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
 &lt;script src="path_to/jquery.form.min.js"&gt;&lt;/script&gt;
-&#x3C;script src=&#x22;path_to/easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
 
 &lt;script&gt;
     EasyEditor.prototype.image = function(){
@@ -68,8 +68,7 @@
     };
 
     jQuery(document).ready(function($) {
-        var easyEditor = new EasyEditor({
-            element: '#editor',
+        var easyEditor = new EasyEditor('#editor', {
             buttons: ['bold', 'italic', 'link', 'image']
         });
 
@@ -145,7 +144,7 @@
     <script src="vendor/jquery.form.min.js"></script>
 
     <!-- easy editor core js -->
-    <script src="src/easyeditor.js"></script>
+    <script src="src/jquery.easyeditor.js"></script>
 
     <script>
         EasyEditor.prototype.image = function(){
@@ -162,8 +161,7 @@
         };
 
         jQuery(document).ready(function($) {
-            var easyEditor = new EasyEditor({
-                element: '#editor',
+            var easyEditor = new EasyEditor('#editor', {
                 buttons: ['bold', 'italic', 'link', 'image']
             });
 

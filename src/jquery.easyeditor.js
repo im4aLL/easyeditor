@@ -1,18 +1,19 @@
-'use strict';
-
 (function($, document, window){
+    'use strict';
 
-    function EasyEditor(options){
-        this.elem = options.element;
+    function EasyEditor( element, options ){
+        this.elem = element;
+        options = options || {};
         this.className = options.className || 'easyeditor';
 
-        var allButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'image', 'youtube', 'list', 'x'];
+        // 'bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x'
         var defaultButtons = ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright'];
         this.buttons = options.buttons || defaultButtons;
         this.buttonsHtml = options.buttonsHtml || null;
         this.overwriteButtonSettings = options.overwriteButtonSettings || null;
         this.css = options.css || null;
         this.onLoaded = typeof options.onLoaded === 'function' ? options.onLoaded : null;
+        this.randomString = Math.random().toString(36).substring(7);
 
         this.attachEvents();
     }
@@ -36,7 +37,7 @@
         var tag = $(_this.elem).prop('tagName').toLowerCase();
 
         if(tag === 'textarea' || tag === 'input') {
-            var placeholderText = $(_this.elem).attr('placeholder');
+            var placeholderText = $(_this.elem).attr('placeholder') || '';
 
             var marginTop = $(_this.elem).css('marginTop') || 0;
             var marginBottom = $(_this.elem).css('marginBottom') || 0;
@@ -45,52 +46,49 @@
                 style = ' style="margin-top: ' + marginTop + '; margin-bottom: ' + marginBottom + '" ';
             }
 
-            $(_this.elem).after('<div id="' + _this.elem.substring(1) + '-editor" placeholder="' + placeholderText + '">' + $(_this.elem).val() + '</div>');
-            $(_this.elem).hide().addClass(_this.className + '-bind');
+            $(_this.elem).after('<div id="' + _this.randomString + '-editor" placeholder="' + placeholderText + '">' + $(_this.elem).val() + '</div>');
+            $(_this.elem).hide().addClass(_this.randomString + '-bind');
 
-            _this.elem = _this.elem + '-editor';
-
-
-            $(_this.elem)
-                .attr('contentEditable', true)
-                .addClass(_this.className)
-                .wrap('<div class="'+ _this.className +'-wrapper"' + style + '></div>');
-
-            this.$wrapperElem = $(_this.elem).parent();
+            _this.elem = document.getElementById(_this.randomString + '-editor');
+            $(_this.elem).attr('contentEditable', true).addClass(_this.className).wrap('<div class="'+ _this.className +'-wrapper"' + style + '></div>');
         }
         else {
-            $(_this.elem)
-                .attr('contentEditable', true)
-                .addClass(_this.className)
-                .wrap('<div class="'+ _this.className +'-wrapper"></div>');
-
-            this.$wrapperElem = $(_this.elem).parent();
+            $(_this.elem).attr('contentEditable', true).addClass(_this.className).wrap('<div class="'+ _this.className +'-wrapper"></div>');
         }
+
+        this.$wrapperElem = $(_this.elem).parent();
 
         if(_this.css !== null) {
             $(_this.elem).css(_this.css);
         }
 
         this.containerClass = '.' + _this.className +'-wrapper';
+
+        if(typeof _this.elem === 'string') {
+            _this.elem = $(_this.elem).get(0);
+        }
     };
 
     // enter and paste key handler
     EasyEditor.prototype.handleKeypress = function(){
         var _this = this;
 
-        $('html').delegate(_this.elem, 'keydown', function(e) {
+        $(_this.elem).keydown(function(e) {
             if(e.keyCode === 13 && _this.isSelectionInsideElement('li') === false) {
                 e.preventDefault();
+
                 if(e.shiftKey === true) {
                     document.execCommand('insertHTML', false, '<br>');
                 }
                 else {
                     document.execCommand('insertHTML', false, '<br><br>');
                 }
+
+                return false;
             }
         });
 
-        document.getElementById(_this.elem.substr(1)).addEventListener('paste', function(e) {
+        _this.elem.addEventListener('paste', function(e) {
             e.preventDefault();
             var text = e.clipboardData.getData('text/plain').replace(/\n/ig, '<br>');
             document.execCommand('insertHTML', false, text);
@@ -490,7 +488,7 @@
 
     // checking if selection outside of editor or not
     EasyEditor.prototype.isSelectionOutsideOfEditor = function(){
-        return !this.elementContainsSelection(document.getElementById(this.elem.substring(1)));
+        return !this.elementContainsSelection(this.elem);
     };
 
     // node contains in containers or not
@@ -539,12 +537,12 @@
             _this.closeModal('#' + $(this).closest('.'+ _this.className + '-modal').attr('id'));
         });
 
-        if( $('.' + _this.className + '-bind').length > 0 ) {
+        if( $('.' + _this.randomString + '-bind').length > 0 ) {
             var bindData;
             $('html').delegate(_this.elem, 'click keyup', function() {
-                var el = this;
+                var el = _this.elem;
                 clearTimeout(bindData);
-                bindData = setTimeout(function(){ $('.' + _this.className + '-bind').html( $(el).html() ); }, 250);
+                bindData = setTimeout(function(){ $('.' + _this.randomString + '-bind').html( $(el).html() ); }, 250);
             });
         }
     };
@@ -761,5 +759,14 @@
     };
 
     window.EasyEditor = EasyEditor;
+
+    $.fn.easyEditor = function ( options ) {
+        return this.each(function () {
+            if (!$.data(this, 'plugin_easyEditor')) {
+                $.data(this, 'plugin_easyEditor',
+                new EasyEditor( this, options ));
+            }
+        });
+    };
 
 })(jQuery, document, window);
