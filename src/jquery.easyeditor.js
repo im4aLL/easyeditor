@@ -162,7 +162,7 @@
 
         // bind click event
         if(typeof settings.clickHandler === 'function') {
-            $('html').delegate(_this.containerClass +' .toolbar-'+ settings.buttonIdentifier, 'click', function(event){
+            $('html').find(_this.elem).closest(_this.containerClass).delegate('.toolbar-'+ settings.buttonIdentifier, 'click', function(event){
                 event.preventDefault();
                 settings.clickHandler.call(this);
                 $(_this.elem).trigger('keyup');
