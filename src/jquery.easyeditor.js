@@ -14,6 +14,7 @@
         this.css = options.css || null;
         this.onLoaded = typeof options.onLoaded === 'function' ? options.onLoaded : null;
         this.randomString = Math.random().toString(36).substring(7);
+        this.theme = options.theme || null;
 
         this.attachEvents();
     }
@@ -66,6 +67,10 @@
 
         if(typeof _this.elem === 'string') {
             _this.elem = $(_this.elem).get(0);
+        }
+
+        if(_this.theme !== null) {
+            $(_this.elem).closest(_this.containerClass).addClass(_this.theme);
         }
     };
 

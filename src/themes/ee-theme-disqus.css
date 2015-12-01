@@ -1,0 +1,38 @@
+.theme-disqus .easyeditor {
+    border: none;
+    padding: 21px;
+    box-shadow: inset 2px 2px 10px 0px rgba(206,213,217,0.3);
+    border-top: 1px solid #eaeef0;
+    margin-bottom: 0;
+    color: #767676;
+}
+
+.theme-disqus .easyeditor-toolbar {
+    border: none;
+    padding: 21px 16px 16px 21px;
+    background: #f6f8f9;
+}
+
+.theme-disqus {
+    border: 2px solid #ced5d9;
+    border-radius: 3px;
+}
+
+.theme-disqus .easyeditor-toolbar li button {
+    background: #eaeef0;
+    background: -moz-linear-gradient(top, #eaeef0 0%, #ced5d9 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #eaeef0), color-stop(100%, #ced5d9));
+    background: -webkit-linear-gradient(top, #eaeef0 0%, #ced5d9 100%);
+    background: -o-linear-gradient(top, #eaeef0 0%, #ced5d9 100%);
+    background: -ms-linear-gradient(top, #eaeef0 0%, #ced5d9 100%);
+    background: linear-gradient(to bottom, #eaeef0 0%, #ced5d9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeef0', endColorstr='#ced5d9', GradientType=0 );
+    color: #767676;
+    padding: 5px 8px;
+    border: 1px solid #ced5d9;
+    transition: opacity 400ms;
+}
+
+.theme-disqus .easyeditor-toolbar li button:hover {
+    opacity: 0.8;
+}
