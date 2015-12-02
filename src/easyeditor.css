@@ -25,6 +25,16 @@
 
 .easyeditor-toolbar li {
     list-style: none;
+    float: left;
+    position: relative;
+}
+
+.easyeditor-toolbar li ul {
+    position: absolute;
+    left: 0;
+    top: 31px;
+    z-index: 5;
+    display: none;
 }
 
 .easyeditor-toolbar li button {
