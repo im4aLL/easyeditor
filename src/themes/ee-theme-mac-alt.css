@@ -54,3 +54,22 @@
     border: 1px solid #4a4e53;
     color: #fff;
 }
+
+
+/* button grouped */
+.theme-mac-alt .easyeditor-toolbar li button {
+    margin-right: 0;
+    border-radius: 0;
+    border-left: 1px solid #767c84;
+}
+
+.theme-mac-alt .easyeditor-toolbar li:first-child button {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-left: 1px solid #5f6368;
+}
+
+.theme-mac-alt .easyeditor-toolbar li:last-child button {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}

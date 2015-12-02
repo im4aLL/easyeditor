@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Easy editor - Dropdown in easyeditor</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- easy editor stylesheet -->
+    <link rel="stylesheet" href="src/easyeditor.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Easy editor <span>Dropdown in easyeditor</span></h1>
+
+
+        <div id="editor" placeholder="Type here ... ">Lorem ipsum dolor sit amet, in pro veri nonumy noster. Habeo oblique eos ut, illum sonet dolore ius eu. Usu ad veri nostro, quaestio reprimique sit ad, inermis reprimique no sea. Cu modo augue complectitur sea, eu mei nusquam minimum imperdiet. Mea error tantas voluptua id.
+<br><br>
+Cum te virtute comprehensam. Ut petentium sententiae adversarium mei, mel equidem fierent ad, porro impetus cu quo. Aperiri signiferumque ius at. Per ne soleat ponderum suscipiantur, usu illum nonumy scripta ea. Est cu tota conclusionemque, ei mel nulla percipit facilisis, ipsum splendide deterruisset eum ad.
+<br><br>
+Legere antiopam ad per, usu id error nostro vivendo. Ut vim liber ubique ullamcorper, nulla putant melius an nam, cum at habemus postulant. Liber qualisque id pro, appetere expetenda cu vim. Quando inciderint eu vim. Ex agam quas modus qui, pro no numquam commune accumsan, eam ut nobis prompta constituam. Id saepe iudicabit iracundia vel.</div>
+
+
+
+        <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
+
+        <p class="p">HTML:</p>
+        <pre class="code">&#x3C;div id=&#x22;editor&#x22; placeholder=&#x22;Type here ... &#x22;&#x3E;&#x3C;/div&#x3E;</pre>
+
+        <p class="p">CSS:</p>
+        <pre class="code">&#x3C;link rel=&#x22;stylesheet&#x22; href=&#x22;path_to/easyeditor.css&#x22;&#x3E;</pre>
+
+        <p class="p">JS:</p>
+        <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+
+&#x3C;script&#x3E;
+EasyEditor.prototype.font = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'font',
+        buttonHtml: 'Font',
+        clickHandler: function(){
+            <mark>_this.openDropdownOf('font');</mark>
+        },
+        <mark>hasChild: true</mark>
+    };
+
+    _this.injectButton(settings);
+};
+
+EasyEditor.prototype.calibri = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'calibri',
+        buttonHtml: 'Calibri',
+        clickHandler: function(){
+            _this.wrapSelectionWithNodeName({ nodeName: 'span', style: 'font-family: Calibri,sans-serif', keepHtml: true });
+        },
+        <mark>childOf: 'font'</mark>
+    };
+
+    _this.injectButton(settings);
+};
+
+EasyEditor.prototype.georgia = function(){
+    var _this = this;
+    var settings = {
+        buttonIdentifier: 'georgia',
+        buttonHtml: 'Georgia',
+        clickHandler: function(){
+            _this.wrapSelectionWithNodeName({ nodeName: 'span', style: 'font-family: Georgia,serif', keepHtml: true });
+        },
+        <mark>childOf: 'font'</mark>
+    };
+
+    _this.injectButton(settings);
+};
+
+jQuery(document).ready(function($) {
+    new EasyEditor('#editor', {
+        buttons: ['bold', 'italic', 'link', 'h2', 'quote', <mark>'font', 'calibri', 'georgia',</mark> 'x']
+    });
+});
+&#x3C;/script&#x3E;</pre>
+
+        <footer>
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
+            <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :)
+        </footer>
+
+        <!-- comment starts -->
+        <script src="https://apis.google.com/js/plusone.js"></script>
+        <div id="comments"></div>
+        <script>
+            gapi.comments.render('comments', {
+                href: window.location,
+                width: '960',
+                first_party_property: 'BLOGGER',
+                view_type: 'FILTERED_POSTMOD'
+            });
+        </script>
+        <!-- comment starts -->
+
+    </div>
+
+    <!-- dependancy js -->
+    <script src="vendor/jquery.min.js"></script>
+    <!-- easy editor core js -->
+    <script src="src/jquery.easyeditor.js"></script>
+
+    <script>
+        EasyEditor.prototype.font = function(){
+            var _this = this;
+            var settings = {
+                buttonIdentifier: 'font',
+                buttonHtml: 'Font',
+                clickHandler: function(){
+                    _this.openDropdownOf('font');
+                },
+                hasChild: true
+            };
+
+            _this.injectButton(settings);
+        };
+
+        EasyEditor.prototype.calibri = function(){
+            var _this = this;
+            var settings = {
+                buttonIdentifier: 'calibri',
+                buttonHtml: 'Calibri',
+                clickHandler: function(){
+                    _this.wrapSelectionWithNodeName({ nodeName: 'span', style: 'font-family: Calibri, sans-serif', keepHtml: true });
+                },
+                childOf: 'font'
+            };
+
+            _this.injectButton(settings);
+        };
+
+        EasyEditor.prototype.georgia = function(){
+            var _this = this;
+            var settings = {
+                buttonIdentifier: 'georgia',
+                buttonHtml: 'Georgia',
+                clickHandler: function(){
+                    _this.wrapSelectionWithNodeName({ nodeName: 'span', style: 'font-family: Georgia, serif', keepHtml: true });
+                },
+                childOf: 'font'
+            };
+
+            _this.injectButton(settings);
+        };
+
+        jQuery(document).ready(function($) {
+            new EasyEditor('#editor', {
+                buttons: ['bold', 'italic', 'link', 'h2', 'quote', 'font', 'calibri', 'georgia', 'x']
+            });
+        });
+    </script>
+
+</body>
+</html>

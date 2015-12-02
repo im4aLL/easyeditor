@@ -15,6 +15,7 @@
         this.onLoaded = typeof options.onLoaded === 'function' ? options.onLoaded : null;
         this.randomString = Math.random().toString(36).substring(7);
         this.theme = options.theme || null;
+        this.dropdown = options.dropdown || {};
 
         this.attachEvents();
     }
@@ -157,17 +158,41 @@
 
         // adding button html
         if(settings.buttonHtml) {
-            _this.$toolbarContainer.find('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
+            if(settings.childOf !== undefined) {
+                var $parentContainer = _this.$toolbarContainer.find('.toolbar-' + settings.childOf).parent('li');
+
+                if($parentContainer.find('ul').length === 0) {
+                    $parentContainer.append('<ul></ul>');
+                }
+
+                $parentContainer = $parentContainer.find('ul');
+                $parentContainer.append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
+            }
+            else {
+                _this.$toolbarContainer.children('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
+            }
         }
 
         // bind click event
         if(typeof settings.clickHandler === 'function') {
             $('html').find(_this.elem).closest(_this.containerClass).delegate('.toolbar-'+ settings.buttonIdentifier, 'click', function(event){
-                event.preventDefault();
+                if(typeof settings.hasChild !== undefined && settings.hasChild === true) {
+                    event.stopPropagation();
+                }
+                else {
+                    event.preventDefault();
+                }
+
                 settings.clickHandler.call(this);
                 $(_this.elem).trigger('keyup');
             });
         }
+    };
+
+    // open dropdown
+    EasyEditor.prototype.openDropdownOf = function(identifier){
+        var _this = this;
+        $(_this.elem).closest(_this.containerClass).find('.toolbar-' + identifier).parent().children('ul').show();
     };
 
     // bidning all buttons
@@ -550,6 +575,10 @@
                 bindData = setTimeout(function(){ $('.' + _this.randomString + '-bind').html( $(el).html() ); }, 250);
             });
         }
+
+        $(document).click(function(event) {
+            $('.' + _this.className).closest('.' + _this.className + '-wrapper').find('.' + _this.className + '-toolbar > ul > li > ul').hide();
+        });
     };
 
     // youtube video id from url
