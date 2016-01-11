@@ -61,9 +61,13 @@
     jQuery(document).ready(function($) {
         new EasyEditor('#description', {
             css: ({
-                minHeight: &#039;300px&#039;,
-                maxHeight: &#039;500px&#039;
-            })
+                minHeight: '300px',
+                maxHeight: '500px'
+            }),
+            onLoaded: function(){
+                console.log('Easy Editor Loaded!');
+            },
+            buttons : ['bold', 'italic', 'link', 'code', 'x', 'source']
         });
 
         $(&#039;your_submit_button&#039;).click(function(event) {
@@ -115,7 +119,8 @@
                 }),
                 onLoaded: function(){
                     console.log('Easy Editor Loaded!');
-                }
+                },
+                buttons : ['bold', 'italic', 'link', 'code', 'x', 'source']
             });
 
 

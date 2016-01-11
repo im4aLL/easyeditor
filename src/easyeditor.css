@@ -115,3 +115,7 @@
 .easyeditor ol {
     margin-left: 30px;
 }
+
+.easyeditor-temp {
+    font-family: Consolas, monaco, monospace, "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter" !important;
+}

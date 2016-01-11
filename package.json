@@ -1,0 +1,24 @@
+{
+  "name": "easyeditor",
+  "version": "1.0.0",
+  "description": "A rice text editor",
+  "main": "src/jquery.easyeditor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/im4aLL/easyeditor.git"
+  },
+  "keywords": [
+    "htmleditor",
+    "editor",
+    "ricetext"
+  ],
+  "author": "Habib Hadi <hadicse@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/im4aLL/easyeditor/issues"
+  },
+  "homepage": "https://github.com/im4aLL/easyeditor#readme"
+}
