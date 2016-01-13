@@ -1,6 +1,6 @@
 {
   "name": "easyeditor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A rice text editor",
   "main": "src/jquery.easyeditor.js",
   "scripts": {
