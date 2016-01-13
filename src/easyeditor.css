@@ -117,5 +117,9 @@
 }
 
 .easyeditor-temp {
-    font-family: Consolas, monaco, monospace, "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter" !important;
+    box-sizing: border-box;
+    font-family: Consolas, monaco, monospace, "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter" !important;
+    line-height: 18px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
 }

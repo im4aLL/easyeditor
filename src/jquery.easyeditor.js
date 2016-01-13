@@ -803,14 +803,14 @@
                 var $tempTextarea;
 
                 if($(thisButton).hasClass('is-view-source-mode')) {
-                    $tempTextarea = $elemContainer.children('textarea.' + _this.className + '-temp');
+                    $tempTextarea = $('body > textarea.' + _this.className + '-temp');
                     $elem.css('visibility', 'visible');
                     $tempTextarea.remove();
                     $(thisButton).removeClass('is-view-source-mode');
                 }
                 else {
-                    $elemContainer.append('<textarea class="' + _this.className + '-temp" style="position: absolute; margin: 0;"></textarea>');
-                    $tempTextarea = $elemContainer.children('textarea.' + _this.className + '-temp');
+                    $('body').append('<textarea class="' + _this.className + '-temp" style="position: absolute; margin: 0;"></textarea>');
+                    $tempTextarea = $('body > textarea.' + _this.className + '-temp');
 
                     $tempTextarea.css({
                         'top' : $elem.offset().top,
@@ -818,6 +818,10 @@
                         'width' : $elem.outerWidth(),
                         'height' : $elem.outerHeight()
                     }).html( $elem.html() );
+
+                    if( $elem.css('border') !== undefined ) {
+                        $tempTextarea.css('border', $elem.css('border'));
+                    }
 
                     $elem.css('visibility', 'hidden');
                     $(thisButton).addClass('is-view-source-mode');
