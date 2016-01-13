@@ -8,3 +8,17 @@ A jQuery richtext html / wysiwyg editor, (very lightweight, easy and simple)
 ### Usage
 
 [http://habibhadi.com/lab/easyeditor/default-example.html](http://habibhadi.com/lab/easyeditor/default-example.html)
+
+#### Install via Node
+
+`npm install easyeditor --save-dev`
+
+#### Using in Browserify
+
+`require('easyeditor');`
+
+```js
+$('.editor').easyEditor({
+  buttons: ['bold', 'italic', 'link', 'h2', 'h3', 'h4', 'alignleft', 'aligncenter', 'alignright', 'quote', 'code', 'list', 'x', 'source']
+});
+```
