@@ -33,6 +33,16 @@
         }
     };
 
+    // destory editor
+    EasyEditor.prototype.detachEvents = function() {
+        var _this = this;
+        var $container = $(_this.elem).closest('.' + _this.className +'-wrapper');
+        var $toolbar = $container.find('.' + _this.className +'-toolbar');
+
+        $toolbar.remove();
+        $(_this.elem).removeClass(_this.className).removeAttr('contenteditable').unwrap();
+    };
+
     // Adding necessary classes and attributes in editor
     EasyEditor.prototype.bootstrap = function() {
         var _this = this;
@@ -166,10 +176,10 @@
                 }
 
                 $parentContainer = $parentContainer.find('ul');
-                $parentContainer.append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
+                $parentContainer.append('<li><button type="button" class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
             }
             else {
-                _this.$toolbarContainer.children('ul').append('<li><button class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
+                _this.$toolbarContainer.children('ul').append('<li><button type="button" class="toolbar-'+ settings.buttonIdentifier +'" title="'+ buttonTitle +'">'+ settings.buttonHtml +'</button></li>');
             }
         }
 

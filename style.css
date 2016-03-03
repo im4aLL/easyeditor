@@ -39,6 +39,11 @@ h1 span {
     opacity: 0.6;
 }
 
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 footer {
     margin: 50px 0;
     font-size: 11px;
