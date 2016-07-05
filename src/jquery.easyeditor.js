@@ -500,7 +500,12 @@
 
         if(node.attribute !== null) {
             if($.isArray(node.attribute) === true) {
-                $(tag).attr(node.attribute[0], node.attribute[1]);
+                if($.isArray(node.attribute[0]) !== true){
+                    node.attribute[0] = [node.attribute[0], node.attribute[1]];
+                }
+                $.each(node.attribute,function(index,pair){
+                    $(tag).attr(pair[0], pair[1]);
+                });
             }
             else {
                 $(tag).attr(node.attribute);
