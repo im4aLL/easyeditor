@@ -32,7 +32,7 @@
         this.utils();
 
         if(this.onLoaded !== null) {
-            this.onLoaded.call(this);
+            this.onLoaded.call(this, this);
         }
         
         if (this.characterLimit) {
