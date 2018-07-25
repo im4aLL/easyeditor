@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Character limit in easyEditor</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- easy editor stylesheet -->
+    <link rel="stylesheet" href="src/easyeditor.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Easy editor <span>Character limit in easy editor</span></h1>
+
+
+
+        <!-- easy editor wil apply in this div -->
+        <div id="editor" placeholder="Type here ... "></div>
+        
+        <button class="button">Click and see console</button>
+
+
+
+        <p class="p">You can change the entire look and feel, can able to add button / event / can do anything with it. Read <a href="./documentation.html">documentation here</a> or <a href="./examples.html">more example here</a></p>
+
+        <p class="p">HTML:</p>
+        <pre class="code">&#x3C;div id=&#x22;editor&#x22; placeholder=&#x22;Type here ... &#x22;&#x3E;&#x3C;/div&#x3E;</pre>
+
+        <p class="p">CSS:</p>
+        <pre class="code">&#x3C;link rel=&#x22;stylesheet&#x22; href=&#x22;path_to/easyeditor.css&#x22;&#x3E;</pre>
+
+        <p class="p">JS:</p>
+        <pre class="code">&#x3C;script src=&#x22;path_to/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+&#x3C;script src=&#x22;path_to/jquery.easyeditor.js&#x22;&#x3E;&#x3C;/script&#x3E;
+
+&#x3C;script&#x3E;
+    jQuery(document).ready(function($) {
+        new EasyEditor('#editor', {
+            characterLimit: 5
+        });
+        
+        // or 
+        new EasyEditor('#editor', {
+            characterLimit: 5,
+            characterLimitText: 'character left',
+            characterLimitPreventKeypress: true
+        });
+    });
+&#x3C;/script&#x3E;</pre>
+
+        <footer>
+            EasyEditor is completely free and open source for educational and commercial purpose. Do whatever you want, i don't give a F!
+            <br>Github URL - <a href="https://github.com/im4aLL/easyeditor" target="_blank">https://github.com/im4aLL/easyeditor</a> Made with &#10084; by <a href="http://habibhadi.com" target="_blank">Habib Hadi</a>
+            <br>Hadi: I'm not that good in JS, please improve it as the way you want. As it requires hard work &amp; time to accomplish that so i expect a thanks at least :)
+        </footer>
+
+        <!-- comment starts -->
+        <script src="https://apis.google.com/js/plusone.js"></script>
+        <div id="comments"></div>
+        <script>
+            gapi.comments.render('comments', {
+                href: window.location,
+                width: '960',
+                first_party_property: 'BLOGGER',
+                view_type: 'FILTERED_POSTMOD'
+            });
+        </script>
+        <!-- comment starts -->
+
+    </div>
+
+    <!-- dependancy js -->
+    <script src="vendor/jquery.min.js"></script>
+    <!-- easy editor core js -->
+    <script src="src/jquery.easyeditor.js"></script>
+
+    <script>
+        jQuery(document).ready(function($) {
+            var editor = new EasyEditor('#editor', {
+                characterLimit: 5
+            });
+            
+            $('.button').click(function(){
+                console.log(editor.getValue()); 
+            });
+        });
+    </script>
+
+</body>
+</html>

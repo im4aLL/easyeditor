@@ -16,6 +16,9 @@
         this.randomString = Math.random().toString(36).substring(7);
         this.theme = options.theme || null;
         this.dropdown = options.dropdown || {};
+        this.characterLimit = options.characterLimit || null;
+        this.characterLimitText = options.characterLimitText || null;
+        this.characterLimitPreventKeypress = options.characterLimitPreventKeypress || false;
 
         this.attachEvents();
     }
@@ -30,6 +33,10 @@
 
         if(this.onLoaded !== null) {
             this.onLoaded.call(this);
+        }
+        
+        if (this.characterLimit) {
+            this.enableCharacterLimit();
         }
     };
 
@@ -185,7 +192,7 @@
 
         // bind click event
         if(typeof settings.clickHandler === 'function') {
-            $('html').find(_this.elem).closest(_this.containerClass).delegate('.toolbar-'+ settings.buttonIdentifier, 'click', function(event){
+            $('html').find(_this.elem).closest(_this.containerClass).on('click', '.toolbar-'+ settings.buttonIdentifier, function(event){
                 if(typeof settings.hasChild !== undefined && settings.hasChild === true) {
                     event.stopPropagation();
                 }
@@ -221,12 +228,12 @@
     EasyEditor.prototype.handleResizeImage = function(){
         var _this = this;
 
-        $('html').delegate(_this.containerClass + ' figure', 'click', function(event) {
+        $('html').on('click', _this.containerClass + ' figure', function(event) {
             event.stopPropagation();
             $(this).addClass('is-resizable');
         });
 
-        $('html').delegate(_this.containerClass + ' figure.is-resizable', 'mousemove', function(event) {
+        $('html').on('mousemove', _this.containerClass + ' figure.is-resizable', function(event) {
             $(this).find('img').css({ 'width' : $(this).width() + 'px' });
         });
 
@@ -577,14 +584,15 @@
     EasyEditor.prototype.utils = function(){
         var _this = this;
 
-        $('html').delegate('.'+ _this.className +'-modal-close', 'click', function(event) {
+        $('html').on('click', '.'+ _this.className +'-modal-close', function(event) {
             event.preventDefault();
             _this.closeModal('#' + $(this).closest('.'+ _this.className + '-modal').attr('id'));
         });
-
+        
+        // binding value in textarea if present
         if( $('.' + _this.randomString + '-bind').length > 0 ) {
             var bindData;
-            $('html').delegate(_this.elem, 'click keyup', function() {
+            $('html').on('click keyup', _this.elem, function() {
                 var el = _this.elem;
                 clearTimeout(bindData);
                 bindData = setTimeout(function(){ $('.' + _this.randomString + '-bind').html( $(el).html() ); }, 250);
@@ -595,6 +603,59 @@
             $('.' + _this.className).closest('.' + _this.className + '-wrapper').find('.' + _this.className + '-toolbar > ul > li > ul').hide();
         });
     };
+    
+    // Get value of current easy editor
+    EasyEditor.prototype.getValue = function() {
+        var _this = this;
+        
+        var html = $(_this.elem).html();
+        var plainText = $(_this.elem).text();
+        var characterCount = plainText.length;
+        var wordCount = plainText.trim().split(/\s+/).length;
+        
+        return {
+            html: html,
+            plainText: plainText,
+            characterCount: characterCount,
+            wordCount: wordCount
+        };
+    };
+    
+    
+    // Enable character limit
+    EasyEditor.prototype.enableCharacterLimit = function() {
+        var _this = this;
+        
+        var currentCharacterCount = _this.characterLimit - _this.getValue().characterCount;
+        $(_this.elem).after('<div class="'+ _this.className +'-character-remaining '+ ((currentCharacterCount <= 0) ? 'is-invalid' : 'is-valid') +'">'+ (_this.characterLimitText ? _this.characterLimitText + ' ' + currentCharacterCount : currentCharacterCount) +'</div>');
+        
+        $('html').on('keyup', _this.elem, function(){
+            var val = _this.getValue();
+            var remainingCount = _this.characterLimit - val.characterCount;
+            var $dom = $(_this.containerClass).find('[class*="-character-remaining"]');
+            
+            if (_this.characterLimitText) {
+                $dom.text(_this.characterLimitText + ' ' + remainingCount);
+            } else {
+                $dom.text(remainingCount);
+            }
+            
+            if (remainingCount <= 0) {
+                $dom.removeClass('is-valid').addClass('is-invalid');
+            } else {
+                $dom.removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+        
+        $('html').on('keypress', _this.elem, function(){
+            var val = _this.getValue();
+            
+            if (_this.characterLimitPreventKeypress && _this.characterLimit <= val.characterCount) {
+                return false;
+            }
+        });
+    }
+    
 
     // youtube video id from url
     EasyEditor.prototype.getYoutubeVideoIdFromUrl = function(url){

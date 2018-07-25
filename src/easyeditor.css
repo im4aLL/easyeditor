@@ -123,3 +123,18 @@
     padding: 15px;
     border: 1px solid #e0e0e0;
 }
+
+.easyeditor-character-remaining {
+    text-align: right;
+    position: relative;
+    top: -17px;
+    font-size: 90%;
+}
+
+.easyeditor-character-remaining.is-invalid {
+    color: #ff0000;
+}
+
+.easyeditor-character-remaining.is-valid {
+    color: #777;
+}
